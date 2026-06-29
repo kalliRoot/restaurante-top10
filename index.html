@@ -1,412 +1,1851 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="light">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📚 Central de Ajuda Konekta | Documentação Oficial</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Google Fonts & Lucide Icons via FontAwesome para consistência visual -->
+    <title>📚 Central de Ajuda Oficial | Konekta ERP</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* CSS RESET & THEME VARIABLES (SUPABASE-INSPIRED PREMIUM DARK MODE) */
+        :root {
+            --bg-base: #06080f;
+            --bg-sidebar: #0b0f19;
+            --bg-card: #111827;
+            --bg-card-hover: #162238;
+            --border-color: #1e293b;
+            --border-color-active: #334155;
+            
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            
+            --accent-green: #10b981;
+            --accent-green-glow: rgba(16, 185, 129, 0.15);
+            --accent-cyan: #06b6d4;
+            --accent-cyan-glow: rgba(6, 182, 212, 0.15);
+            
+            --status-free: #10b981;
+            --status-busy: #ef4444;
+            --status-billing: #f59e0b;
+            
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+            --radius-lg: 12px;
+            --radius-md: 8px;
+            --radius-sm: 4px;
+            --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border-color) var(--bg-base);
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-base);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: var(--radius-sm);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--border-color-active);
+        }
+
+        /* HEADER / NAVIGATION BAR */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background-color: rgba(6, 8, 15, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: 1000;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .hamburger {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
+
+        .hamburger:hover {
+            background-color: var(--border-color);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            color: var(--accent-green);
+            font-size: 1.5rem;
+            animation: pulse-slow 3s infinite ease-in-out;
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            background: linear-gradient(135deg, #ffffff 0%, #a3a3a3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-badge {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent-green);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .search-wrapper {
+            position: relative;
+            width: 480px;
+            max-width: 45%;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 16px 10px 42px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-sidebar);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 0 3px var(--accent-cyan-glow);
+        }
+
+        .search-badge {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.75rem;
+            background: var(--bg-base);
+            border: 1px solid var(--border-color);
+            padding: 2px 6px;
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            pointer-events: none;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-header {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 8px 16px;
+            border-radius: var(--radius-md);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .btn-header:hover {
+            border-color: var(--border-color-active);
+            background-color: var(--bg-card-hover);
+        }
+
+        .btn-accent {
+            background-color: var(--accent-green);
+            border: 1px solid var(--accent-green);
+            color: #06080f;
+        }
+
+        .btn-accent:hover {
+            background-color: #0d9668;
+            border-color: #0d9668;
+        }
+
+        /* MAIN WRAPPER & CONTAINER */
+        .app-container {
+            display: flex;
+            padding-top: 70px;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR COMPONENT */
+        .sidebar {
+            width: 300px;
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 70px;
+            bottom: 0;
+            left: 0;
+            overflow-y: auto;
+            padding: 24px 16px;
+            z-index: 990;
+            transition: var(--transition);
+        }
+
+        .nav-group {
+            margin-bottom: 24px;
+        }
+
+        .nav-group-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            padding-left: 12px;
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .nav-item i {
+            font-size: 0.95rem;
+            width: 18px;
+            text-align: center;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .nav-item:hover {
+            color: var(--text-primary);
+            background-color: rgba(255, 255, 255, 0.04);
+        }
+
+        .nav-item:hover i {
+            color: var(--accent-cyan);
+        }
+
+        .nav-item.active {
+            color: var(--text-primary);
+            background-color: rgba(6, 182, 212, 0.08);
+            border-left: 3px solid var(--accent-cyan);
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .nav-item.active i {
+            color: var(--accent-cyan);
+        }
+
+        /* MAIN CONTENT AREA */
+        .content-container {
+            margin-left: 300px;
+            flex-grow: 1;
+            padding: 40px 56px 80px 56px;
+            max-width: 1200px;
+            width: calc(100% - 300px);
+            transition: var(--transition);
+        }
+
+        /* BREADCRUMBS */
+        .breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .breadcrumbs a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .breadcrumbs a:hover {
+            color: var(--accent-cyan);
+        }
+
+        .breadcrumbs i {
+            font-size: 0.65rem;
+        }
+
+        /* DOCUMENTATION PAGES */
+        .doc-page {
+            display: none;
+            animation: pageFadeIn 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .doc-page.active {
+            display: block;
+        }
+
+        @keyframes pageFadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* TYPOGRAPHY IN DOCS */
+        .doc-header {
+            margin-bottom: 32px;
+        }
+
+        .doc-title-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .doc-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: var(--text-primary);
+        }
+
+        .doc-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-top: 8px;
+            max-width: 800px;
+        }
+
+        h2.section-header {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            margin-top: 40px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2.section-header i {
+            color: var(--accent-cyan);
+            font-size: 1.1rem;
+        }
+
+        p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* CARD GRIDS (HOME PAGE) */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 24px;
+        }
+
+        .doc-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .doc-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-green));
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .doc-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-color-active);
+            background-color: var(--bg-card-hover);
+            box-shadow: var(--shadow);
+        }
+
+        .doc-card:hover::before {
+            opacity: 1;
+        }
+
+        .doc-card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            background-color: rgba(255, 255, 255, 0.03);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--accent-cyan);
+            transition: var(--transition);
+        }
+
+        .doc-card:hover .doc-card-icon {
+            background-color: var(--accent-cyan-glow);
+            color: var(--accent-cyan);
+        }
+
+        .doc-card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .doc-card-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* MODULAR LAYOUT ELEMENTS */
+        .callout {
+            background-color: rgba(6, 182, 212, 0.03);
+            border-left: 4px solid var(--accent-cyan);
+            border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+            padding: 20px;
+            margin: 24px 0;
+        }
+
+        .callout-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .callout-title i {
+            color: var(--accent-cyan);
+        }
+
+        .callout p {
+            margin-bottom: 0;
+            font-size: 0.9rem;
+        }
+
+        .callout.danger {
+            background-color: rgba(239, 68, 68, 0.03);
+            border-left-color: #ef4444;
+        }
+
+        .callout.danger .callout-title i {
+            color: #ef4444;
+        }
+
+        .callout.success {
+            background-color: rgba(16, 185, 129, 0.03);
+            border-left-color: var(--accent-green);
+        }
+
+        .callout.success .callout-title i {
+            color: var(--accent-green);
+        }
+
+        /* STANDARD GRID LISTS */
+        .spec-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 24px 0;
+        }
+
+        .spec-box {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+        }
+
+        .spec-box-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-primary);
+        }
+
+        .spec-box-title.do { color: var(--accent-green); }
+        .spec-box-title.dont { color: #ef4444; }
+
+        .spec-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .spec-list li {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
+        .spec-list li i {
+            margin-top: 4px;
+            font-size: 0.85rem;
+        }
+
+        .spec-list li .fa-check { color: var(--accent-green); }
+        .spec-list li .fa-xmark { color: #ef4444; }
+
+        /* FLOWCHART ENGINE */
+        .flow-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background-color: var(--bg-sidebar);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin: 24px 0;
+        }
+
+        .flow-node {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 0.9rem;
+            position: relative;
+        }
+
+        .flow-node-badge {
+            background-color: var(--accent-cyan-glow);
+            color: var(--accent-cyan);
+            font-weight: 700;
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: var(--radius-sm);
+            flex-shrink: 0;
+        }
+
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            height: 12px;
+            margin: -2px 0;
+        }
+
+        /* MEDIA LAYOUT FOR PRINTS, GIFS & VIDEOS */
+        .media-placeholder {
+            background-color: var(--bg-sidebar);
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius-lg);
+            aspect-ratio: 16 / 9;
+            margin: 24px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            color: var(--text-muted);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .media-placeholder:hover {
+            border-color: var(--border-color-active);
+            color: var(--text-secondary);
+        }
+
+        .media-placeholder i {
+            font-size: 2.2rem;
+        }
+
+        .media-placeholder span {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .media-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+        }
+
+        /* TABLES */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            margin: 24px 0;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--bg-sidebar);
+            color: var(--text-primary);
+            font-weight: 600;
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        td {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* FAQ CONTAINER ACCORDIONS */
+        .faq-accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .faq-item {
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .faq-item:hover {
+            border-color: var(--border-color-active);
+        }
+
+        .faq-trigger {
+            padding: 18px 24px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            color: var(--text-primary);
+        }
+
+        .faq-trigger i {
+            transition: var(--transition);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .faq-content {
+            padding: 0 24px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.25s cubic-bezier(0, 1, 0, 1);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .faq-item.active .faq-content {
+            padding: 0 24px 20px 24px;
+            max-height: 1000px;
+            transition: all 0.25s cubic-bezier(1, 0, 1, 0);
+        }
+
+        .faq-item.active .faq-trigger i {
+            transform: rotate(180deg);
+            color: var(--accent-cyan);
+        }
+
+        .faq-item.active {
+            border-color: var(--border-color-active);
+            background-color: var(--bg-card-hover);
+        }
+
+        /* CHANGELOG TIMELINE */
+        .changelog {
+            position: relative;
+            margin: 32px 0;
+            padding-left: 28px;
+        }
+
+        .changelog::before {
+            content: '';
+            position: absolute;
+            top: 6px;
+            bottom: 6px;
+            left: 6px;
+            width: 2px;
+            background-color: var(--border-color);
+        }
+
+        .changelog-item {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .changelog-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .changelog-marker {
+            position: absolute;
+            left: -28px;
+            top: 4px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: var(--accent-cyan);
+            border: 3px solid var(--bg-base);
+        }
+
+        .changelog-item:hover .changelog-marker {
+            background-color: var(--accent-green);
+            box-shadow: 0 0 8px var(--accent-green);
+        }
+
+        .changelog-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .changelog-version {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .changelog-date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            background-color: var(--bg-sidebar);
+            padding: 2px 8px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+        }
+
+        .changelog-body {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .changelog-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: var(--radius-sm);
+            margin-right: 6px;
+            text-transform: uppercase;
+        }
+
+        .changelog-tag.feat { background-color: rgba(16, 185, 129, 0.1); color: var(--accent-green); border: 1px solid rgba(16, 185, 129, 0.15); }
+        .changelog-tag.fix { background-color: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.15); }
+        .changelog-tag.perf { background-color: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border: 1px solid rgba(6, 182, 212, 0.15); }
+
+        /* SEARCH MARKER */
+        mark {
+            background-color: rgba(6, 182, 212, 0.25);
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--accent-cyan);
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+
+        /* BACK TO TOP BUTTON */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 44px;
+            height: 44px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            cursor: pointer;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            transform: translateY(-2px);
+        }
+
+        /* FOOTER SYSTEM VERSIONING */
+        .footer {
+            background-color: var(--bg-sidebar);
+            border-top: 1px solid var(--border-color);
+            padding: 40px 24px;
+            text-align: center;
+            margin-top: auto;
+            position: relative;
+            z-index: 500;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .footer-brand {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .footer-meta {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .footer-meta span i {
+            color: var(--accent-cyan);
+        }
+
+        /* ANIMATION DECLARATIONS */
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        /* RESPONSIVE BREAKPOINTS */
+        @media (max-width: 1024px) {
+            .content-container {
+                padding: 30px;
+            }
+            .search-wrapper {
+                width: 320px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .sidebar {
+                transform: translateX(-300px);
+                width: 300px;
+                box-shadow: var(--shadow);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .content-container {
+                margin-left: 0;
+                width: 100%;
+                padding: 24px;
+            }
+
+            .search-wrapper {
+                display: none; /* Hide global bar on smaller screens */
+            }
+
+            .spec-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-actions .btn-header span {
+                display: none; /* Hide button text on mobile icons */
+            }
+        }
+    </style>
 </head>
 <body>
 
-    <!-- TOP BAR -->
-    <header class="top-bar">
+    <!-- MAIN HEADER -->
+    <header class="header">
         <div class="header-left">
-            <button id="toggle-sidebar" class="btn-icon" aria-label="Menu"><i class="fas fa-bars"></i></button>
-            <div class="logo">
-                <span class="logo-bold">Konekta</span><span class="logo-light">IA</span>
-                <span class="badge-version">v1.0.0</span>
-            </div>
-        </div>
-        
-        <div class="search-container">
-            <i class="fas fa-search search-icon"></i>
-            <input type="text" id="search-input" placeholder="Buscar por módulos, funções, dúvidas...">
-            <div id="search-results-count" class="search-count-badge"></div>
+            <button class="hamburger" id="hamburger-menu" aria-label="Menu Lateral">
+                <i class="fas fa-bars"></i>
+            </button>
+            <a href="#" class="logo" onclick="switchPage('inicio'); return false;">
+                <i class="fa-solid fa-square-poll-vertical logo-icon"></i>
+                <span class="logo-text">Konekta</span>
+                <span class="logo-badge">ERP</span>
+            </a>
         </div>
 
-        <div class="header-right">
-            <button id="theme-toggle" class="btn-icon" title="Alternar Tema"><i class="fas fa-moon"></i></button>
-            <button class="btn-home" onclick="navigateTo('inicio')"><i class="fas fa-home"></i> Início</button>
+        <div class="search-wrapper">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="doc-search" class="search-input" placeholder="Buscar módulos, erros comuns, fluxo...">
+            <span class="search-badge" id="search-counter">Ctrl K</span>
+        </div>
+
+        <div class="header-actions">
+            <button class="btn-header" onclick="switchPage('faq')">
+                <i class="fa-solid fa-circle-question"></i>
+                <span>FAQ</span>
+            </button>
+            <a href="#" class="btn-header btn-accent" onclick="switchPage('inicio'); return false;">
+                <i class="fa-solid fa-home"></i>
+                <span>Home</span>
+            </a>
         </div>
     </header>
 
-    <div class="main-container">
-        <!-- SIDEBAR NAVIGATION -->
+    <!-- CONTENT WRAPPER -->
+    <div class="app-container">
+
+        <!-- COLLAPSIBLE SIDEBAR -->
         <aside class="sidebar" id="sidebar">
-            <nav class="nav-menu">
-                <a href="#inicio" class="nav-item active" onclick="navigateTo('inicio')"><i class="fas fa-home"></i> Início</a>
-                <a href="#primeiros-passos" class="nav-item" onclick="navigateTo('primeiros-passos')"><i class="fas fa-rocket"></i> Primeiros Passos</a>
-                
-                <div class="nav-heading">Módulos Operacionais</div>
-                <a href="#whatsapp" class="nav-item" onclick="navigateTo('whatsapp')"><i class="fab fa-whatsapp"></i> WhatsApp Bot</a>
-                <a href="#cardapio-dia" class="nav-item" onclick="navigateTo('cardapio-dia')"><i class="fas fa-utensils"></i> Cardápio do Dia</a>
-                <a href="#mapa-mesas" class="nav-item" onclick="navigateTo('mapa-mesas')"><i class="fas fa-th"></i> Mapa das Mesas</a>
-                <a href="#fila-producao" class="nav-item" onclick="navigateTo('fila-producao')"><i class="fas fa-cheese"></i> Fila de Produção</a>
-                <a href="#balcao" class="nav-item" onclick="navigateTo('balcao')"><i class="fas fa-shopping-basket"></i> Balcão</a>
-                <a href="#salao" class="nav-item" onclick="navigateTo('salao')"><i class="fas fa-chair"></i> Salão</a>
-                
-                <div class="nav-heading">Pesagem & Retaguarda</div>
-                <a href="#proteina-peso" class="nav-item" onclick="navigateTo('proteina-peso')"><i class="fas fa-drumstick-bite"></i> Proteína por Peso</a>
-                <a href="#refeicao-peso" class="nav-item" onclick="navigateTo('refeicao-peso')"><i class="fas fa-balance-scale"></i> Refeição por Peso</a>
-                <a href="#caixa" class="nav-item" onclick="navigateTo('caixa')"><i class="fas fa-cash-register"></i> Caixa</a>
-                <a href="#crediario" class="nav-item" onclick="navigateTo('crediario')"><i class="fas fa-book"></i> Crediário</a>
-                <a href="#estoque" class="nav-item" onclick="navigateTo('estoque')"><i class="fas fa-boxes"></i> Estoque</a>
-                <a href="#gestao-produtos" class="nav-item" onclick="navigateTo('gestao-produtos')"><i class="fas fa-apple-alt"></i> Gestão de Produtos</a>
-                
-                <div class="nav-heading">Suporte & Dados</div>
-                <a href="#relatorios" class="nav-item" onclick="navigateTo('relatorios')"><i class="fas fa-chart-pie"></i> Relatórios</a>
-                <a href="#configuracoes" class="nav-item" onclick="navigateTo('configuracoes')"><i class="fas fa-sliders-h"></i> Configurações</a>
-                <a href="#faq" class="nav-item" onclick="navigateTo('faq')"><i class="fas fa-question-circle"></i> Perguntas Frequentes</a>
-                <a href="#historico-atualizacoes" class="nav-item" onclick="navigateTo('historico-atualizacoes')"><i class="fas fa-history"></i> Histórico</a>
+            <nav>
+                <div class="nav-group">
+                    <div class="nav-group-title">Introdução</div>
+                    <ul class="nav-list">
+                        <li><a class="nav-item active" data-page="inicio" onclick="switchPage('inicio')"><i class="fa-solid fa-house"></i>Início</a></li>
+                        <li><a class="nav-item" data-page="primeiros-passos" onclick="switchPage('primeiros-passos')"><i class="fa-solid fa-rocket"></i>Primeiros Passos</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-group">
+                    <div class="nav-group-title">Módulos de Atendimento</div>
+                    <ul class="nav-list">
+                        <li><a class="nav-item" data-page="bot-whatsapp" onclick="switchPage('bot-whatsapp')"><i class="fab fa-whatsapp"></i>Bot WhatsApp</a></li>
+                        <li><a class="nav-item" data-page="cardapio-dia" onclick="switchPage('cardapio-dia')"><i class="fa-solid fa-utensils"></i>Cardápio do Dia</a></li>
+                        <li><a class="nav-item" data-page="balcao" onclick="switchPage('balcao')"><i class="fa-solid fa-cash-register"></i>Balcão</a></li>
+                        <li><a class="nav-item" data-page="salao" onclick="switchPage('salao')"><i class="fa-solid fa-mobile-screen-button"></i>Salão</a></li>
+                        <li><a class="nav-item" data-page="mapa-mesas" onclick="switchPage('mapa-mesas')"><i class="fa-solid fa-table-cells-large"></i>Mapa das Mesas</a></li>
+                        <li><a class="nav-item" data-page="fila-producao" onclick="switchPage('fila-producao')"><i class="fa-solid fa-kitchen-set"></i>Fila de Produção</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-group">
+                    <div class="nav-group-title">Cálculo & Pesagem</div>
+                    <ul class="nav-list">
+                        <li><a class="nav-item" data-page="proteina-peso" onclick="switchPage('proteina-peso')"><i class="fa-solid fa-drumstick-bite"></i>Proteína por Peso</a></li>
+                        <li><a class="nav-item" data-page="refeicao-peso" onclick="switchPage('refeicao-peso')"><i class="fa-solid fa-scale-balanced"></i>Refeição por Peso</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-group">
+                    <div class="nav-group-title">Painel Administrador</div>
+                    <ul class="nav-list">
+                        <li><a class="nav-item" data-page="gestao-produtos" onclick="switchPage('gestao-produtos')"><i class="fa-solid fa-box-open"></i>Gestão de Produtos</a></li>
+                        <li><a class="nav-item" data-page="estoque" onclick="switchPage('estoque')"><i class="fa-solid fa-boxes-stacked"></i>Estoque</a></li>
+                        <li><a class="nav-item" data-page="caixa" onclick="switchPage('caixa')"><i class="fa-solid fa-wallet"></i>Caixa</a></li>
+                        <li><a class="nav-item" data-page="crediario" onclick="switchPage('crediario')"><i class="fa-solid fa-book-bookmark"></i>Crediário</a></li>
+                        <li><a class="nav-item" data-page="pedidos-agendados" onclick="switchPage('pedidos-agendados')"><i class="fa-solid fa-clock"></i>Pedidos Agendados</a></li>
+                        <li><a class="nav-item" data-page="relatorios" onclick="switchPage('relatorios')"><i class="fa-solid fa-chart-line"></i>Relatórios</a></li>
+                        <li><a class="nav-item" data-page="configuracoes" onclick="switchPage('configuracoes')"><i class="fa-solid fa-sliders"></i>Configurações</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-group">
+                    <div class="nav-group-title">Ajuda & Recursos</div>
+                    <ul class="nav-list">
+                        <li><a class="nav-item" data-page="faq" onclick="switchPage('faq')"><i class="fa-solid fa-circle-question"></i>Perguntas Frequentes</a></li>
+                        <li><a class="nav-item" data-page="historico" onclick="switchPage('historico')"><i class="fa-solid fa-clock-rotate-left"></i>Changelog</a></li>
+                    </ul>
+                </div>
             </nav>
         </aside>
 
-        <!-- MAIN CONTENT AREA -->
-        <main class="content-area">
+        <!-- CONTAINER FOR RENDERING SECTIONS -->
+        <main class="content-container">
+
             <!-- BREADCRUMBS -->
-            <div class="breadcrumbs" id="breadcrumbs">
-                <span onclick="navigateTo('inicio')">Konekta</span> <i class="fas fa-chevron-right"></i> <span id="current-crumb">Início</span>
+            <div class="breadcrumbs">
+                <a href="#" onclick="switchPage('inicio'); return false;">Central de Ajuda</a>
+                <i class="fa-solid fa-chevron-right"></i>
+                <span id="breadcrumb-current">Início</span>
             </div>
 
-            <!-- SECTIONS CONTAINER -->
-            <div id="doc-content">
-
-                <!-- INÍCIO -->
-                <section id="inicio" class="doc-section active">
-                    <div class="hero">
-                        <h1>Gestão Inteligente para Restaurantes</h1>
-                        <p>Seja bem-vindo à Central de Ajuda Oficial do Konekta. Aqui você encontra guias práticos, documentações modulares e respostas rápidas para otimizar a operação do seu estabelecimento de ponta a ponta.</p>
+            <!-- PAGE: INICIO -->
+            <section class="doc-page active" id="page-inicio">
+                <div class="doc-header">
+                    <div class="doc-title-wrapper">
+                        <h1 class="doc-title">Central de Ajuda Konekta</h1>
+                        <span class="logo-badge">Documentação Oficial v1.0.0</span>
                     </div>
+                    <p class="doc-subtitle">O hub definitivo de conhecimento técnico e operacional do Konekta ERP. Aprenda a configurar seu sistema, parametrizar o Bot WhatsApp, gerenciar suas mesas e automatizar sua produção de cozinha.</p>
+                </div>
 
-                    <div class="grid-cards">
-                        <div class="card" onclick="navigateTo('whatsapp')">
-                            <i class="fab fa-whatsapp card-icon text-whatsapp"></i>
-                            <h3>WhatsApp Automation</h3>
-                            <p>Entenda o fluxo inteligente de atendimento e pedidos automatizados via bot.</p>
-                        </div>
-                        <div class="card" onclick="navigateTo('mapa-mesas')">
-                            <i class="fas fa-th card-icon text-mesas"></i>
-                            <h3>Mapa das Mesas</h3>
-                            <p>Gerencie comandos, divisão de contas, consumos por peso e encerramentos rápidos.</p>
-                        </div>
-                        <div class="card" onclick="navigateTo('fila-producao')">
-                            <i class="fas fa-cheese card-icon text-producao"></i>
-                            <h3>Fila de Produção</h3>
-                            <p>Monitore KDS, tempos de preparo, alertas sonoros e entregas sincronizadas.</p>
-                        </div>
-                        <div class="card" onclick="navigateTo('caixa')">
-                            <i class="fas fa-cash-register card-icon text-caixa"></i>
-                            <h3>Fluxo de Caixa</h3>
-                            <p>Abertura, sangrias, conciliação de métodos de pagamento (Pix, Cartão, Dinheiro) e fechamento.</p>
-                        </div>
-                        <div class="card" onclick="navigateTo('gestao-produtos')">
-                            <i class="fas fa-apple-alt card-icon text-produtos"></i>
-                            <h3>Cardápio & Produtos</h3>
-                            <p>Diferenciação entre Cadastro Mestre e Cardápio Dinâmico Diário.</p>
-                        </div>
-                        <div class="card" onclick="navigateTo('crediario')">
-                            <i class="fas fa-book card-icon text-crediario"></i>
-                            <h3>Crediário (Pendura)</h3>
-                            <p>Controle de contas correntes de clientes correntistas, limites de crédito e notificações.</p>
-                        </div>
+                <h2 class="section-header"><i class="fa-solid fa-cubes"></i>Navegue por Módulo Operacional</h2>
+                <div class="card-grid">
+                    <div class="doc-card" onclick="switchPage('bot-whatsapp')">
+                        <div class="doc-card-icon"><i class="fab fa-whatsapp"></i></div>
+                        <h3 class="doc-card-title">Bot WhatsApp</h3>
+                        <p class="doc-card-desc">Controle a inteligência conversacional (bot.js), configure etapas de pedidos automatizados de Marmita e taxas de entrega.</p>
                     </div>
-                </section>
-
-                <!-- PRIMEIROS PASSOS -->
-                <section id="primeiros-passos" class="doc-section">
-                    <h2>🚀 Primeiros Passos</h2>
-                    <p>Configure seu ambiente operacional Konekta em poucos minutos seguindo a trilha inicial de implantação.</p>
-                    <div class="step-list">
-                        <div class="step-item">
-                            <div class="step-number">1</div>
-                            <div class="step-text"><strong>Configuração de Perfil:</strong> Insira os dados cadastrais da empresa, CNPJ, horários de funcionamento e regras de entrega em Configurações.</div>
-                        </div>
-                        <div class="step-item">
-                            <div class="step-number">2</div>
-                            <div class="step-text"><strong>Cadastro Mestre de Produtos:</strong> Alimente seu inventário com insumos, bebidas e pratos base estruturados por categorias nativas.</div>
-                        </div>
-                        <div class="step-item">
-                            <div class="step-number">3</div>
-                            <div class="step-text"><strong>Vinculação do WhatsApp:</strong> Realize a leitura do QR Code do seu dispositivo para ativar a Inteligência Artificial de atendimento automático.</div>
-                        </div>
+                    <div class="doc-card" onclick="switchPage('mapa-mesas')">
+                        <div class="doc-card-icon"><i class="fa-solid fa-table-cells-large"></i></div>
+                        <h3 class="doc-card-title">Mapa das Mesas</h3>
+                        <p class="doc-card-desc">Gerenciamento dinâmico de layout, comandas ativas, divisão de contas parciais e controle de consumo por peso.</p>
                     </div>
-                </section>
-
-                <!-- WHATSAPP -->
-                <section id="whatsapp" class="doc-section">
-                    <h2>💬 Automação do WhatsApp</h2>
-                    <p>O Konekta possui um ecossistema de processamento de linguagem natural focado em converter mensagens casuais em pedidos estruturados no seu painel principal.</p>
-                    
-                    <h3>Fluxo Completo da Jornada do Cliente</h3>
-                    <div class="flowchart">
-                        <div class="flow-step"><strong>1. Entrada:</strong> Cliente envia "Oi" ou qualquer saudação.</div>
-                        <div class="flow-step"><strong>2. Direcionamento:</strong> Bot questiona: Delivery ou Retirada Balcão.</div>
-                        <div class="flow-step"><strong>3. Volume:</strong> Usuário seleciona a Quantidade de Marmitas/Pratos.</div>
-                        <div class="flow-step"><strong>4. Dimensionamento:</strong> Escolha do tamanho (M, G, Torre).</div>
-                        <div class="flow-step"><strong>5. Base:</strong> Seleção do tipo de Feijão (Carioca, Preto, Sem Feijão).</div>
-                        <div class="flow-step"><strong>6. Proteínas:</strong> Definição das opções de carnes e substitutos dispostos no dia.</div>
-                        <div class="flow-step"><strong>7. Acompanhamentos:</strong> Escolha de guarnições (Arroz, Farofa, Saladas, Massas).</div>
-                        <div class="flow-step"><strong>8. Upsell:</strong> Oferta inteligente de Bebidas e Sobremesas.</div>
-                        <div class="flow-step"><strong>9. Observações:</strong> Campo livre para restrições ou notas adicionais.</div>
-                        <div class="flow-step"><strong>10. Logística:</strong> Coleta/Confirmação de Endereço via CEP ou Geolocalização.</div>
-                        <div class="flow-step"><strong>11. Finanças:</strong> Escolha da Forma de Pagamento (Pix com Copia e Cola automático, Cartão na entrega).</div>
-                        <div class="flow-step"><strong>12. Despacho:</strong> Pedido transmitido instantaneamente para a Fila de Produção da cozinha.</div>
-                        <div class="flow-step"><strong>13. Status:</strong> Notificação automática de atualização ("Em preparo", "Saiu para entrega").</div>
+                    <div class="doc-card" onclick="switchPage('fila-producao')">
+                        <div class="doc-card-icon"><i class="fa-solid fa-kitchen-set"></i></div>
+                        <h3 class="doc-card-title">Fila de Produção</h3>
+                        <p class="doc-card-desc">Painel KDS de cozinha, sincronização de tempos de preparo, sinal sonoro de campainha e despache ágil.</p>
                     </div>
-                </section>
+                    <div class="doc-card" onclick="switchPage('caixa')">
+                        <div class="doc-card-icon"><i class="fa-solid fa-wallet"></i></div>
+                        <h3 class="doc-card-title">Frente de Caixa</h3>
+                        <p class="doc-card-desc">Gestão de turnos, sangrias, suprimentos de troco, conciliações bancárias Pix automáticas e cartões.</p>
+                    </div>
+                    <div class="doc-card" onclick="switchPage('gestao-produtos')">
+                        <div class="doc-card-icon"><i class="fa-solid fa-box-open"></i></div>
+                        <h3 class="doc-card-title">Gestão de Produtos</h3>
+                        <p class="doc-card-desc">Cadastro Mestre e canais de visibilidade independentes (WhatsApp, Balcão, Salão, Estoque).</p>
+                    </div>
+                    <div class="doc-card" onclick="switchPage('crediario')">
+                        <div class="doc-card-icon"><i class="fa-solid fa-book-bookmark"></i></div>
+                        <h3 class="doc-card-title">Crediário (Pendura)</h3>
+                        <p class="doc-card-desc">Mapeamento de faturamento para mensalistas, bloqueios por inadimplência e réguas de cobrança automatizadas.</p>
+                    </div>
+                </div>
 
-                <!-- CARDÁPIO DO DIA -->
-                <section id="cardapio-dia" class="doc-section">
-                    <h2>🍽 Cardápio do Dia vs Cadastro Mestre</h2>
-                    <p>Para evitar retrabalhos diários, o Konekta divide a arquitetura de produtos em duas esferas lógicas:</p>
-                    
-                    <blockquote>
-                        <strong>Conceito Chave:</strong> O <em>Cadastro Mestre</em> armazena absolutamente tudo o que sua cozinha é capaz de produzir. O <em>Cardápio do Dia</em> é um espelho ativo contendo apenas o que está disponível para venda nas próximas horas.
-                    </blockquote>
+                <div class="callout success">
+                    <div class="callout-title"><i class="fa-solid fa-circle-info"></i>Sincronização em Tempo Real</div>
+                    <p>O Konekta ERP opera baseado em WebSockets ativos. Qualquer alteração realizada na Gestão de Produtos ou no Cardápio do Dia reflete instantaneamente nas telas do salão, garçons e atendimentos de robô sem a necessidade de atualizar a página.</p>
+                </div>
+            </section>
 
-                    <h3>Configuração Rápida do Cardápio do Dia</h3>
-                    <p>Acesse o painel do Cardápio Diário e simplesmente marque os seletores ativos. Isso muda em tempo real a visibilidade no robô do WhatsApp, nos tablets do Salão e na interface do Balcão.</p>
-                    
-                    <h3>Estrutura das Categorias Padrão (Sidebar do Cardápio)</h3>
-                    <ul>
-                        <li><strong>Bovino:</strong> Cortes como Cupim, Alcatra, Carne de Panela.</li>
-                        <li><strong>Suíno:</strong> Bisteca, Lombo Assado, Costelinha.</li>
-                        <li><strong>Frango:</strong> Filé de Frango Grelhado, Frango Assado, Fricassê.</li>
-                        <li><strong>Peixes:</strong> Filé de Tilápia, Bacalhoada (Sextas-feiras).</li>
-                        <li><strong>Acompanhamentos:</strong> Purê de Batata, Batata Frita, Mandioca Frita.</li>
-                        <li><strong>Sábado (Especialidade):</strong> Feijoada Completa e Guarnições Dedicadas.</li>
-                        <li><strong>Adicionais:</strong> Ovo Frito Extra, Queijo Ralado, Molhos Especiais.</li>
-                    </ul>
-                </section>
+            <!-- PAGE: PRIMEIROS PASSOS -->
+            <section class="doc-page" id="page-primeiros-passos">
+                <div class="doc-header">
+                    <h1 class="doc-title">🚀 Primeiros Passos</h1>
+                    <p class="doc-subtitle">Guia rápido de configuração e preparação do ambiente Konekta para novos estabelecimentos.</p>
+                </div>
 
-                <!-- MAPA DAS MESAS -->
-                <section id="mapa-mesas" class="doc-section">
-                    <h2>🗺 Mapa das Mesas</h2>
-                    <p>Interface gráfica em grid que representa o layout físico do salão do restaurante.</p>
-                    <h3>Rotinas Operacionais Padronizadas:</h3>
-                    <ul>
-                        <li><strong>Abrir Mesa:</strong> Clique em uma mesa cinza (Livre), digite o número e clique em Inicializar.</li>
-                        <li><strong>Adicionar Cliente:</strong> Vincule o nome do cliente ou o número da comanda para controle individualizado dentro da mesma mesa.</li>
-                        <li><strong>Lançar Pedidos:</strong> Selecione os itens do menu. Ao confirmar, impressoras térmicas específicas da cozinha ou telas KDS recebem as comandas automaticamente.</li>
-                        <li><strong>Lançamento de Itens por Peso:</strong> Integre balanças homologadas ou insira manualmente as gramaturas de <em>Proteína por Peso</em> ou <em>Refeição por Peso</em> diretamente no fluxo da mesa.</li>
-                        <li><strong>Dividir Mesa / Fechamento Parcial:</strong> Selecione os itens consumidos por uma pessoa específica da mesa. O sistema isola o subtotal, gera o QR Code Pix ou processa o cartão, dando baixa automática apenas nos itens pagos e mantendo a mesa aberta para o restante do grupo.</li>
-                        <li><strong>Fechamento e Encerramento Total:</strong> Clique em "Fechar Mesa". O sistema emite a pré-conta, bloqueia novos lançamentos e aguarda a confirmação de recebimento no Caixa para liberar o status da mesa para "Livre".</li>
-                    </ul>
-                </section>
+                <h2 class="section-header"><i class="fa-solid fa-list-check"></i>Estrutura Inicial de Configuração</h2>
+                <div class="flow-diagram">
+                    <div class="flow-node"><span class="flow-node-badge">Passo 1</span><strong>Ativação do Servidor e Banco de Dados:</strong> Validação do banco Postgres/MongoDB com os models cadastrados.</div>
+                    <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                    <div class="flow-node"><span class="flow-node-badge">Passo 2</span><strong>Cadastro de Usuários:</strong> Criação do login Admin em Configurações e definição de cargos.</div>
+                    <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                    <div class="flow-node"><span class="flow-node-badge">Passo 3</span><strong>Configuração de Cadastro Mestre:</strong> Criação dos insumos bases, bebidas e proteínas na Gestão de Produtos.</div>
+                    <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                    <div class="flow-node"><span class="flow-node-badge">Passo 4</span><strong>Vinculação do WhatsApp:</strong> Leitura do QR Code de bot.js em configurações avançadas.</div>
+                </div>
 
-                <!-- FILA DE PRODUÇÃO -->
-                <section id="fila-producao" class="doc-section">
-                    <h2>🍱 Fila de Produção (KDS)</h2>
-                    <p>Substitua os papéis por telas de alta performance na sua cozinha para acelerar os preparos.</p>
-                    <ul>
-                        <li><strong>Fila e Prioridade:</strong> Pedidos entram cronologicamente. Pedidos de Delivery urgentes recebem tags visuais piscantes laranja.</li>
-                        <li><strong>Pedidos Agendados:</strong> Itens programados para entrega tardia ficam ocultos e entram na linha ativa automaticamente 30 minutos antes do horário de entrega.</li>
-                        <li><strong>Alertas de Campainha:</strong> Sinalização sonora configurável a cada novo pedido recebido ou quando um prato atinge o tempo limite de espera.</li>
-                        <li><strong>Ciclo de Status do Item:</strong>
-                            <br><span class="badge">Pendente</span> → <span class="badge" style="background:#3b82f6;">Iniciar Preparo</span> → <span class="badge" style="background:#10b981;">Finalizar Preparo</span> → <span class="badge" style="background:#6b7280;">Entregue / Despachado</span>
-                        </li>
-                    </ul>
-                </section>
+                <h2 class="section-header"><i class="fa-solid fa-shield"></i>Boas Práticas</h2>
+                <p>Antes de abrir a primeira venda oficial do seu restaurante, realize simulações de fluxo ponta a ponta: envie um pedido pelo WhatsApp, monitore-o no KDS de cozinha, realize o fechamento do item por peso e feche o caixa.</p>
+            </section>
 
-                <!-- BALCÃO -->
-                <section id="balcao" class="doc-section">
-                    <h2>🛒 Operação de Balcão (Takeaway)</h2>
-                    <p>Módulo de venda rápida focado no fluxo de clientes que compram diretamente no balcão para consumir em outro local.</p>
-                    <p>Abertura de venda direta sem necessidade de alocação de mesa. O fluxo exige apenas a seleção dos produtos, preenchimento opcional do nome do cliente para chamada no painel, e liquidação financeira imediata.</p>
-                </section>
+            <!-- PAGE: BOT WHATSAPP -->
+            <section class="doc-page" id="page-bot-whatsapp">
+                <div class="doc-header">
+                    <h1 class="doc-title">💬 Bot WhatsApp (Inteligência Conversacional)</h1>
+                    <p class="doc-subtitle">Detalhamento técnico da lógica de estados implementada em bot.js para recepção e montagem automatizada de pedidos.</p>
+                </div>
 
-                <!-- SALÃO -->
-                <section id="salao" class="doc-section">
-                    <h2>🍴 Atendimento de Salão</h2>
-                    <p>Interface responsiva otimizada para smartphones e tablets utilizados pelos garçons.</p>
-                    <p>Permite mobilidade total: o garçom faz o pedido ao lado do cliente e os dados são disparados em tempo real para o bar e para a cozinha, reduzindo o tempo de atendimento em até 40%.</p>
-                </section>
+                <h2 class="section-header"><i class="fa-solid fa-circle-play"></i>Objetivo & Funcionamento</h2>
+                <p>O robô do Konekta converte conversas textuais orgânicas em pedidos estruturados. Ele elimina a necessidade de portais de pedidos externos (que forçam o cliente a baixar aplicativos) guiando o usuário passo a passo diretamente pela tela do chat do WhatsApp.</p>
 
-                <!-- PROTEÍNA POR PESO -->
-                <section id="proteina-peso" class="doc-section">
-                    <h2>🥩 Proteína por Peso</h2>
-                    <p>Módulo dedicado a restaurantes que trabalham com preço fixo para o buffet livre, porém realizam cobrança pesada e fracionada para carnes nobres ou churrasco.</p>
-                    <p>No momento de lançar o item na comanda, a tela solicitará a pesagem exata em gramas. O cálculo é feito multiplicando o peso líquido pelo valor cadastrado no Cadastro Mestre por Quilo.</p>
-                </section>
+                <h2 class="section-header"><i class="fa-solid fa-arrows-spin"></i>Fluxo Completo da Conversação</h2>
+                <div class="flow-diagram">
+                    <div class="flow-node"><span class="flow-node-badge">Etapa 1</span><strong>Saudação Inicial:</strong> O robô recebe qualquer texto ("Oi", "Cardápio") e dispara a apresentação inicial do estabelecimento.</div>
+                    <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                    <div class="flow-node"><span class="flow-node-badge">Etapa 2</span><strong>Tipo de Atendimento:</strong> Solicita que o cliente informe se deseja Delivery ou Retirada Balcão.</div>
+                    <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                    <div class="flow-node"><span class="flow-node-badge">Etapa 3</span><strong>Quantidade de Marmitas:</strong> Pergunta quantas refeições o cliente quer registrar neste pedido.</div>
+                    <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                    <div class="flow-node"><span class="flow-node-badge">Etapa 4</span><strong>Escolha de Tamanho:</strong> Permite escolher o tamanho da marmita (P, M ou G), calculando o preço base de cada.</div>
+                    <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                    <div class="flow-node"><span class="flow-node-badge">Etapa 5</span><strong>Escolha do Feijão:</strong> Opções entre feijão Carioca, feijão Preto, Sem Feijão, etc.</div>
+                    <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                    <div class="flow-node"><span class="flow-node-badge">Etapa 6</span><strong>Definição de Proteínas:</strong> Seleção baseada nas proteínas vinculadas e ativas no Cardápio do Dia.</div>
+                    <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                    <div class="flow-node"><span class="flow-node-badge">Etapa 7</span><strong>Acompanhamentos:</strong> Permite marcar guarnições e acompanhamentos específicos.</div>
+                    <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                    <div class="flow-node"><span class="flow-node-badge">Etapa 8</span><strong>Bebidas / Sobremesas:</strong> Menu de Upsell apresentando bebidas geladas e complementos do dia.</div>
+                    <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                    <div class="flow-node"><span class="flow-node-badge">Etapa 9</span><strong>Observações Livres:</strong> Exemplo: "Enviar cebola à parte", "Salada sem vinagre".</div>
+                    <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                    <div class="flow-node"><span class="flow-node-badge">Etapa 10</span><strong>Coleta de Endereço:</strong> Solicita localização ou digitação de endereço completo para entrega.</div>
+                    <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                    <div class="flow-node"><span class="flow-node-badge">Etapa 11</span><strong>Confirmação de Pagamento:</strong> Apresentação do subtotal + taxa de entrega. Envia chave Pix Copia e Cola.</div>
+                    <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                    <div class="flow-node"><span class="flow-node-badge">Etapa 12</span><strong>Envio para Produção:</strong> Após confirmação, insere o pedido na Fila de Produção em tempo real.</div>
+                </div>
 
-                <!-- REFEIÇÃO POR PESO -->
-                <section id="refeicao-peso" class="doc-section">
-                    <h2>⚖ Refeição por Peso (Self-Service)</h2>
-                    <p>Ideal para operações tradicionais de buffet self-service por quilo.</p>
-                    <p>O operador posiciona o prato na balança acoplada, o sistema desconta o valor da Tara automaticamente e computa o valor monetário real instantaneamente, imprimindo a comanda com código de barras para leitura posterior no caixa.</p>
-                </section>
+                <div class="media-placeholder">
+                    <i class="fa-solid fa-images"></i>
+                    <span>Preview do Fluxo Conversacional (Interface do Cliente no WhatsApp)</span>
+                </div>
 
-                <!-- CAIXA -->
-                <section id="caixa" class="doc-section">
-                    <h2>💳 Frente de Caixa (PDV)</h2>
-                    <p>O coração financeiro do seu estabelecimento. O fluxo do caixa exige conciliação rigorosa de entradas e saídas.</p>
-                    <ul>
-                        <li><strong>Abertura de Caixa:</strong> Defina o valor de fundo de reserva (troco) no início do expediente.</li>
-                        <li><strong>Formas de Pagamento Homologadas:</strong> Pix (com conciliação bancária instantânea via API), Cartões de Crédito/Débito, Dinheiro e Vales Alimentação.</li>
-                        <li><strong>Suprimentos e Sangrias:</strong> Registre entradas extras de troco (Suprimento) ou retiradas de valores altos para segurança (Sangria) detalhando o motivo.</li>
-                        <li><strong>Fechamento de Caixa:</strong> Tela de fechamento cego (onde o operador informa os valores físicos em caixa sem saber o valor do sistema). O Konekta processa a divergência e gera o relatório gerencial de quebras ou sobras.</li>
-                    </ul>
-                </section>
+                <div class="spec-grid">
+                    <div class="spec-box">
+                        <div class="spec-box-title do"><i class="fa-solid fa-circle-check"></i>Boas Práticas</div>
+                        <ul class="spec-list">
+                            <li><i class="fa-solid fa-check"></i> Configure as respostas rápidas de bot.js de forma simpática e curta para leituras rápidas em smartphones.</li>
+                            <li><i class="fa-solid fa-check"></i> Mantenha a visibilidade de produtos sempre sincronizada no painel de controle.</li>
+                        </ul>
+                    </div>
+                    <div class="spec-box">
+                        <div class="spec-box-title dont"><i class="fa-solid fa-circle-xmark"></i>Erros Comuns</div>
+                        <ul class="spec-list">
+                            <li><i class="fa-solid fa-xmark"></i> Desconectar o celular do WhatsApp Web durante a operação ativa (derruba o serviço node do bot.js).</li>
+                            <li><i class="fa-solid fa-xmark"></i> Deixar de parametrizar o preço de bebidas lata, gerando pedidos com valor zerado.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
 
-                <!-- CREDIÁRIO -->
-                <section id="crediario" class="doc-section">
-                    <h2>📒 Crediário (Controle de Mensalistas / Pendura)</h2>
-                    <p>Gerencie clientes confiáveis, empresas parceiras ou funcionários que consomem diariamente para pagar de forma agrupada quinzenal ou mensalmente.</p>
-                    <ul>
-                        <li><strong>Cadastro e Limite:</strong> Defina um limite de crédito máximo para cada cliente correntista cadastrado.</li>
-                        <li><strong>Fluxo de Venda:</strong> No encerramento da Mesa ou Balcão, selecione a opção de pagamento "Crediário" e vincule ao cliente cadastrado.</li>
-                        <li><strong>Vencimentos e Notificações:</strong> O sistema monitora as datas de vencimento acordadas e disponibiliza uma régua de cobrança automática via WhatsApp integrada.</li>
-                        <li><strong>Recebimento de Faturas:</strong> No módulo Crediário, busque pelo cliente, selecione as contas em aberto e realize a liquidação total ou parcial direto para o Caixa ativo do dia.</li>
-                    </ul>
-                </section>
+            <!-- PAGE: CARDAPIO DO DIA -->
+            <section class="doc-page" id="page-cardapio-dia">
+                <div class="doc-header">
+                    <h1 class="doc-title">🍽 Cardápio do Dia</h1>
+                    <p class="doc-subtitle">O espelho operacional dinâmico que define o que está disponível para comercialização imediata.</p>
+                </div>
 
-                <!-- ESTOQUE -->
-                <section id="estoque" class="doc-section">
-                    <h2>📦 Estoque e Insumos</h2>
-                    <p>Controle preciso de mercadorias vendáveis e insumos de produção.</p>
-                    <ul>
-                        <li><strong>Entrada de Mercadorias:</strong> Importação automatizada via chave XML da Nota Fiscal de compra ou preenchimento manual de lotes.</li>
-                        <li><strong>Baixa Automática:</strong> Itens como refrigerantes, sucos e cervejas sofrem baixa instantânea a cada unidade vendida no PDV ou WhatsApp.</li>
-                        <li><strong>Alertas de Estoque Mínimo:</strong> Relatórios visuais dinâmicos alertando quando insumos essenciais atingem a margem crítica de segurança de reposição.</li>
-                    </ul>
-                </section>
+                <h2 class="section-header"><i class="fa-solid fa-file-invoice"></i>Diferença Conceitual</h2>
+                <div class="callout">
+                    <p><strong>Cadastro Mestre:</strong> Contém o registro completo de tudo que o estabelecimento pode preparar ou vender. Fica armazenado no banco de dados para inventário.</p>
+                    <p><strong>Cardápio do Dia:</strong> É uma seleção enxuta extraída do Cadastro Mestre. Define quais itens estão visíveis no robô do WhatsApp e nos comandos de salão no dia de hoje.</p>
+                </div>
 
-                <!-- GESTÃO DE PRODUTOS -->
-                <section id="gestao-produtos" class="doc-section">
-                    <h2>🥤 Gestão Geral de Produtos e Catálogos</h2>
-                    <p>Configuração profunda dos atributos das suas mercadorias comerciais.</p>
-                    <h3>Matriz de Visibilidade dos Canais</h3>
-                    <p>No painel de edição de qualquer produto, você pode determinar exatamente onde ele ficará visível utilizando caixas de seleção rápida:</p>
+                <h2 class="section-header"><i class="fa-solid fa-layer-group"></i>Sidebar e Categorias Oficiais</h2>
+                <p>O cardápio dinâmico do Konekta obrigatoriamente divide a operação nas seguintes categorias estruturais de visualização rápida:</p>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Categoria</th>
+                                <th>Alvo de Aplicação</th>
+                                <th>Exemplo Operacional</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Bovino</strong></td>
+                                <td>Carnes vermelhas disponíveis para prato comercial ou marmitex.</td>
+                                <td>Alcatra Grelhada, Carne de Panela.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Suíno</strong></td>
+                                <td>Cortes suínos tradicionais da culinária de buffet.</td>
+                                <td>Lombo Assado, Bisteca Frita.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Frango</strong></td>
+                                <td>Proteínas de frango grelhadas ou assadas.</td>
+                                <td>Filé de Frango, Frango com Quiabo.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Peixes</strong></td>
+                                <td>Cortes de peixes para buffet livre ou sob demanda.</td>
+                                <td>Filé de Tilápia Empanado, Bacalhau.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Acompanhamentos</strong></td>
+                                <td>Guarnições e saladas que acompanham o prato.</td>
+                                <td>Farofa Caseira, Purê de Batata.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sábado</strong></td>
+                                <td>Especialidade exclusiva de feijoada e adicionais pesados.</td>
+                                <td>Feijoada Completa, Torresmo de Rolo.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Adicionais</strong></td>
+                                <td>Itens de complementação que adicionam margem de lucro.</td>
+                                <td>Ovo Extra, Queijo Ralado Especial.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- PAGE: BALCAO -->
+            <section class="doc-page" id="page-balcao">
+                <div class="doc-header">
+                    <h1 class="doc-title">🛒 Módulo Balcão (Takeaway)</h1>
+                    <p class="doc-subtitle">Gerenciamento de pedidos expressos de clientes físicos que realizam a retirada direto no balcão.</p>
+                </div>
+
+                <h2 class="section-header"><i class="fa-solid fa-cart-shopping"></i>Fluxo Completo do Balcão</h2>
+                <div class="flow-diagram">
+                    <div class="flow-node"><span class="flow-node-badge">1</span><strong>Seleção Instantânea:</strong> O operador do PDV clica nos itens solicitados diretamente na interface gráfica rápida de balcão.</div>
+                    <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                    <div class="flow-node"><span class="flow-node-badge">2</span><strong>Dados do Cliente:</strong> Inserção opcional do nome do cliente para chamada via painel ou senha.</div>
+                    <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                    <div class="flow-node"><span class="flow-node-badge">3</span><strong>Fechamento Imediato:</strong> Seleção do método de pagamento (Dinheiro, Pix, Cartão) e finalização. O pedido é enviado impresso para a copa/cozinha.</div>
+                </div>
+
+                <div class="media-placeholder">
+                    <i class="fa-solid fa-images"></i>
+                    <span>Screenshot da Tela de Vendas do Módulo de Balcão</span>
+                </div>
+            </section>
+
+            <!-- PAGE: SALAO -->
+            <section class="doc-page" id="page-salao">
+                <div class="doc-header">
+                    <h1 class="doc-title">🍴 Atendimento de Salão</h1>
+                    <p class="doc-subtitle">Interface responsiva ultrarrápida projetada especificamente para garçons que realizam os pedidos via smartphones ou tablets junto à mesa.</p>
+                </div>
+
+                <h2 class="section-header"><i class="fa-solid fa-tablet-screen-button"></i>Como Utilizar no Dia a Dia</h2>
+                <p>O garçom seleciona o número da mesa, visualiza as comandas abertas, clica em "Adicionar Itens", seleciona os pratos e guarnições e clica em "Confirmar". O processamento envia os dados imediatamente para as impressoras térmicas correspondentes (Copa para bebidas, Cozinha para pratos).</p>
+            </section>
+
+            <!-- PAGE: MAPA DAS MESAS -->
+            <section class="doc-page" id="page-mapa-mesas">
+                <div class="doc-header">
+                    <h1 class="doc-title">🗺 Mapa das Mesas</h1>
+                    <p class="doc-subtitle">O painel de monitoramento geográfico do salão que controla o faturamento de grupos e clientes individuais.</p>
+                </div>
+
+                <h2 class="section-header"><i class="fa-solid fa-circle-info"></i>Objetivo</h2>
+                <p>Fornecer visão macro instantânea de quais áreas do salão estão livres, ocupadas, aguardando pré-conta ou em processo de encerramento financeiro direto na recepção.</p>
+
+                <h2 class="section-header"><i class="fa-solid fa-square-check"></i>Estados de Mesa Disponíveis</h2>
+                <p>Cada mesa é exibida em cores em tempo real que mudam dinamicamente por intermédio das ações do sistema:</p>
+                <ul>
+                    <li><strong style="color: var(--status-free);">Livre (Verde):</strong> Mesa vazia, pronta para receber novos clientes.</li>
+                    <li><strong style="color: var(--status-busy);">Ocupada (Vermelho):</strong> Possui comandas vinculadas ativas e itens em aberto.</li>
+                    <li><strong style="color: var(--status-billing);">Aguardando Fechamento (Laranja):</strong> O cliente solicitou a conta ("pré-conta emitida"), travando novos lançamentos até a liquidação.</li>
+                </ul>
+
+                <h2 class="section-header"><i class="fa-solid fa-diagram-project"></i>Operações de Divisão de Mesa</h2>
+                <p>O Konekta ERP permite a <strong>Divisão de Contas Parciais</strong>. É possível fechar a conta de apenas um integrante da mesa sem liberar a mesa inteira:</p>
+                <div class="flow-diagram">
+                    <div class="flow-node"><strong>Passo 1:</strong> Abra a mesa no painel e clique em "Dividir Conta / Receber Selecionados".</div>
+                    <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                    <div class="flow-node"><strong>Passo 2:</strong> Marque na lista de consumo apenas os itens consumidos pelo cliente que vai embora.</div>
+                    <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                    <div class="flow-node"><strong>Passo 3:</strong> Escolha a forma de pagamento específica desse subtotal e processe o encerramento. O sistema dá baixa nos itens e mantém a mesa ocupada com os restantes.</div>
+                </div>
+            </section>
+
+            <!-- PAGE: FILA DE PRODUÇÃO -->
+            <section class="doc-page" id="page-fila-producao">
+                <div class="doc-header">
+                    <h1 class="doc-title">🍱 Fila de Produção (KDS)</h1>
+                    <p class="doc-subtitle">O sistema centralizado de controle de fluxo de preparação da cozinha, substituindo as impressoras de cupom de papel.</p>
+                </div>
+
+                <h2 class="section-header"><i class="fa-solid fa-tv"></i>Estrutura de Tela KDS</h2>
+                <p>A fila de produção exibe blocos individuais para cada pedido contendo o tempo decorrido desde o envio. Os pratos são ordenados automaticamente por prioridade de tempo de preparo e urgência.</p>
+
+                <h2 class="section-header"><i class="fa-solid fa-bell"></i>Campainha e Alertas</h2>
+                <p>Cada novo pedido recebido pelo WhatsApp Bot ou inserido pelas comandas de mesa emite um aviso sonoro (Campainha configurable nas definições do sistema) para que a equipe de cozinha inicie o preparo sem perder tempo de resposta.</p>
+
+                <div class="media-placeholder">
+                    <i class="fa-solid fa-images"></i>
+                    <span>Visual do Painel KDS de Cozinha (Monitor de Preparo)</span>
+                </div>
+            </section>
+
+            <!-- PAGE: PROTEINA PESO -->
+            <section class="doc-page" id="page-proteina-peso">
+                <div class="doc-header">
+                    <h1 class="doc-title">🥩 Proteína por Peso</h1>
+                    <p class="doc-subtitle">Gestão automatizada de cobrança sob demanda para carnes nobres e churrasco integradas ao fluxo padrão.</p>
+                </div>
+
+                <h2 class="section-header"><i class="fa-solid fa-calculator"></i>Lógica de Cálculo</h2>
+                <p>Utilizado em restaurantes self-service que trabalham com valor fixo para o buffet básico, mas cobram as proteínas preparadas na churrasqueira por quilo.</p>
+                <div class="callout">
+                    <p>Ao lançar o item "Churrasco", o garçom insere o peso aferido na balança (ex: <strong>0.320 kg</strong>). O sistema multiplica instantaneamente pelo preço cadastrado no banco:</p>
+                    <p style="font-family: var(--font-code); font-size: 1.1rem; text-align: center; margin-top: 10px; color: var(--accent-cyan);">
+                        Valor Cobrado = Peso em kg * Valor do Kg Cadastrado
+                    </p>
+                </div>
+            </section>
+
+            <!-- PAGE: REFEICAO PESO -->
+            <section class="doc-page" id="page-refeicao-peso">
+                <div class="doc-header">
+                    <h1 class="doc-title">⚖ Refeição por Peso</h1>
+                    <p class="doc-subtitle">Configurações para buffet self-service integrado por quilo com remoção automática de Tara de prato.</p>
+                </div>
+
+                <h2 class="section-header"><i class="fa-solid fa-weight-scale"></i>Operação Automatizada</h2>
+                <p>O Konekta se conecta diretamente com balanças homologadas via porta serial/USB. O operador do caixa apenas coloca o prato do cliente na balança. O ERP desconta o valor de Tara pré-configurado do prato e emite a comanda com código de barras ou atribui o valor monetário direto na mesa informada.</p>
+            </section>
+
+            <!-- PAGE: GESTAO DE PRODUTOS -->
+            <section class="doc-page" id="page-gestao-produtos">
+                <div class="doc-header">
+                    <h1 class="doc-title">🥤 Gestão de Produtos</h1>
+                    <p class="doc-subtitle">Controle unificado de itens comerciais de venda direta, insumos de receitas e visibilidade multicanal.</p>
+                </div>
+
+                <h2 class="section-header"><i class="fa-solid fa-network-wired"></i>Canais de Visibilidade Nativos</h2>
+                <p>O Konekta ERP trabalha com o conceito de visibilidade isolada por canal de venda. No momento do cadastro do produto, você define onde ele pode ou não ser visualizado e comercializado:</p>
+                <div class="table-responsive">
                     <table>
                         <thead>
                             <tr>
                                 <th>Canal de Venda</th>
-                                <th>Uso Prático</th>
-                                <th>Exemplo Comercial</th>
+                                <th>Função de Ativação</th>
+                                <th>Exemplos Comuns</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><strong>WhatsApp</strong></td>
-                                <td>Visível para clientes finais que compram pelo bot de delivery.</td>
-                                <td>Marmitas, Bebidas Lata, Doces Embalados.</td>
+                                <td>Disponibiliza o item na lista automática de opções do Bot de Delivery.</td>
+                                <td>Marmitas tradicionais, Refrigerantes em Lata.</td>
                             </tr>
                             <tr>
                                 <td><strong>Balcão</strong></td>
-                                <td>Itens visíveis na tela de pedidos rápidos de retirada.</td>
-                                <td>Salgados da estufa, Café expresso.</td>
+                                <td>Exibe o item na tela de atendimento e vendas rápidas do caixa de retirada física.</td>
+                                <td>Salgados, Sobremesas expressas do mostruário.</td>
                             </tr>
                             <tr>
                                 <td><strong>Salão</strong></td>
-                                <td>Disponível nos tablets e smartphones dos garçons.</td>
-                                <td>Porções, Pratos Executivos, Sucos em Jarra.</td>
+                                <td>Disponível para lançamento no aplicativo mobile dos garçons ou tablets fixos.</td>
+                                <td>Porções, Cerveja em garrafa, Pratos Executivos.</td>
                             </tr>
                             <tr>
                                 <td><strong>Estoque</strong></td>
-                                <td>Mapeamento interno de controle de estoque de insumos não vendidos diretamente.</td>
-                                <td>Fardo de Arroz, Óleo de Soja (Quilos/Litros).</td>
+                                <td>Ignora o produto nos canais de vendas públicas, mantendo o controle para insumos de produção.</td>
+                                <td>Saco de Arroz 5kg, Azeite de Galão, Peças de Carne crua.</td>
                             </tr>
                         </tbody>
                     </table>
-                </section>
+                </div>
+            </section>
 
-                <!-- RELATÓRIOS -->
-                <section id="relatorios" class="doc-section">
-                    <h2>📊 Relatórios Gerenciais</h2>
-                    <p>Analise a saúde financeira da sua operação através de dashboards intuitivos de Business Intelligence.</p>
-                    <ul>
-                        <li><strong>Faturamento Bruto vs Líquido:</strong> Visualização por período (Diário, Semanal, Mensal).</li>
-                        <li><strong>Curva ABC de Pratos:</strong> Saiba com exatidão quais são as proteínas e pratos mais vendidos e quais geram maior margem de lucro real.</li>
-                        <li><strong>Ticket Médio por Canal:</strong> Compare se o seu cliente consome mais valor financeiro dentro do Salão ou através do canal de Delivery do WhatsApp.</li>
-                    </ul>
-                </section>
+            <!-- PAGE: ESTOQUE -->
+            <section class="doc-page" id="page-estoque">
+                <div class="doc-header">
+                    <h1 class="doc-title">📦 Controle de Estoque</h1>
+                    <p class="doc-subtitle">Gestão inteligente de entrada de insumos comerciais, baixas automáticas e alertas de escassez crítica.</p>
+                </div>
 
-                <!-- CONFIGURAÇÕES -->
-                <section id="configuracoes" class="doc-section">
-                    <h2>⚙ Configurações Gerais do Sistema</h2>
-                    <p>Área de controle administrativo do Konekta ERP.</p>
-                    <p>Aqui você realiza o gerenciamento de permissões de usuários (Administrador, Gerente, Operador de Caixa, Garçom), cadastro de impressoras térmicas via IP ou USB, tempo de resposta padrão do robô e limites territoriais das taxas de entrega de delivery.</p>
-                </section>
+                <h2 class="section-header"><i class="fa-solid fa-circle-check"></i>Baixa Automática (Fichas Técnicas)</h2>
+                <p>Ao realizar uma venda de "Refrigerante Coca-Cola", o sistema reduz automaticamente uma unidade no inventário de produtos prontos para consumo. No caso de pratos preparados, a baixa pode ser configurada para deduzir as gramaturas dos ingredientes cadastrados em suas fichas técnicas no momento em que o prato entra na Fila de Produção.</p>
+            </section>
 
-                <!-- FAQ -->
-                <section id="faq" class="doc-section">
-                    <h2>❓ Perguntas Frequentes (FAQ)</h2>
-                    <p>Respostas diretas para as principais dúvidas de suporte operacional diário.</p>
-                    
-                    <div class="faq-container">
-                        <div class="faq-item">
-                            <div class="faq-question">Meu pedido não apareceu na tela da cozinha, o que fazer? <i class="fas fa-chevron-down"></i></div>
-                            <div class="faq-answer">Verifique se o pedido foi devidamente finalizado no Caixa/Balcão ou se o cliente concluiu a etapa de pagamento no WhatsApp. Verifique também a conexão de internet do KDS ou impressora correspondente àquela categoria de produto.</div>
+            <!-- PAGE: CAIXA -->
+            <section class="doc-page" id="page-caixa">
+                <div class="doc-header">
+                    <h1 class="doc-title">💳 Caixa e Turnos</h1>
+                    <p class="doc-subtitle">Processos detalhados de abertura, lançamentos de auditoria financeira e fechamento cego.</p>
+                </div>
+
+                <h2 class="section-header"><i class="fa-solid fa-cash-register"></i>Fluxo Recomendado para o Dia a Dia</h2>
+                <div class="flow-diagram">
+                    <div class="flow-node"><span class="flow-node-badge">1</span><strong>Abertura de Turno:</strong> Defina o valor inicial de "Fundo de Troco" físico.</div>
+                    <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                    <div class="flow-node"><span class="flow-node-badge">2</span><strong>Movimentações Básicas:</strong> Lançamento em tempo real de qualquer Sangria (saída de dinheiro para cofre) ou Suprimento (entrada extra de troco).</div>
+                    <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                    <div class="flow-node"><span class="flow-node-badge">3</span><strong>Fechamento Cego de Turno:</strong> Ao final do dia, o operador insere o valor em dinheiro que possui em mãos fisicamente, sem que o sistema revele as previsões eletrônicas, garantindo auditoria limpa de perdas ou quebras de caixa.</div>
+                </div>
+            </section>
+
+            <!-- PAGE: CREDIARIO -->
+            <section class="doc-page" id="page-crediario">
+                <div class="doc-header">
+                    <h1 class="doc-title">📒 Módulo de Crediário (Pendura / Mensalistas)</h1>
+                    <p class="doc-subtitle">Sistema inteligente de controle de contas correntes internas de clientes assíduos e empresas parceiras.</p>
+                </div>
+
+                <h2 class="section-header"><i class="fa-solid fa-user-plus"></i>Como Cadastrar e Limitar</h2>
+                <p>Em <strong>Crediário > Cadastrar Cliente</strong>, defina o limite máximo de crédito rotativo concedido para aquela entidade (ex: R$ 500,00). No momento de pagar qualquer comanda no salão ou pedido do balcão, selecione o método de pagamento "Lançar em Crediário" e selecione o cliente cadastrado.</p>
+
+                <h2 class="section-header"><i class="fa-solid fa-triangle-exclamation"></i>Régua de Cobrança Automática</h2>
+                <p>Defina datas de vencimento padrão para as cobranças agrupadas. O Konekta ERP monitora os débitos não liquidados na data estipulada e dispara de forma proativa notificações personalizadas via API do WhatsApp para que o mensalista faça o pagamento Pix sem a necessidade de intervenção humana.</p>
+            </section>
+
+            <!-- PAGE: PEDIDOS AGENDADOS -->
+            <section class="doc-page" id="page-pedidos-agendados">
+                <div class="doc-header">
+                    <h1 class="doc-title">📅 Pedidos Agendados</h1>
+                    <p class="doc-subtitle">Lógica de agendamento de marmitas e serviços de buffet para datas e horários específicos.</p>
+                </div>
+
+                <h2 class="section-header"><i class="fa-regular fa-calendar-check"></i>Lançamento e Espera</h2>
+                <p>Pedidos agendados para o futuro são armazenados em um módulo de esteira passiva de segurança. Eles não congestionam a Fila de Produção KDS ativa. O sistema monitora o tempo de preparo padrão cadastrado e insere o pedido na esteira de produção ativa exatamente 30 minutos antes do horário parametrizado pelo cliente no agendamento do WhatsApp.</p>
+            </section>
+
+            <!-- PAGE: RELATORIOS -->
+            <section class="doc-page" id="page-relatorios">
+                <div class="doc-header">
+                    <h1 class="doc-title">📊 Relatórios e Business Intelligence</h1>
+                    <p class="doc-subtitle">Extraia dados analíticos reais sobre faturamento líquido, margens de lucro e desempenho de vendas por canal.</p>
+                </div>
+
+                <h2 class="section-header"><i class="fa-solid fa-chart-pie"></i>Curva ABC de Produtos</h2>
+                <p>O Konekta analisa em tempo real os itens faturados e monta um ranking ordenado das mercadorias que mais geram receita e aquelas com maior taxa de rejeição ou pouca circulação, permitindo uma tomada de decisão rápida e assertiva sobre o que deve ou não continuar no Cardápio do Dia.</p>
+            </section>
+
+            <!-- PAGE: CONFIGURACOES -->
+            <section class="doc-page" id="page-configuracoes">
+                <div class="doc-header">
+                    <h1 class="doc-title">⚙ Configurações Avançadas</h1>
+                    <p class="doc-subtitle">Definições globais de hardware, roteamento de impressoras térmicas e segurança de usuários.</p>
+                </div>
+
+                <h2 class="section-header"><i class="fa-solid fa-print"></i>Roteamento de Impressão</h2>
+                <p>Defina o destino padrão de cada comando emitido nas telas operacionais:</p>
+                <ul>
+                    <li><strong>Impressora da Copa:</strong> Roteia automaticamente pedidos da categoria "Bebidas", "Adicionais" e "Doces".</li>
+                    <li><strong>Impressora da Cozinha:</strong> Roteia pedidos de pratos principais, acompanhamentos e proteínas grelhadas.</li>
+                    <li><strong>Impressora do Caixa:</strong> Destinada a emissões de pré-contas, faturas e fechamentos operacionais físicos de turnos.</li>
+                </ul>
+            </section>
+
+            <!-- PAGE: FAQ -->
+            <section class="doc-page" id="page-faq">
+                <div class="doc-header">
+                    <h1 class="doc-title">❓ Perguntas Frequentes (FAQ)</h1>
+                    <p class="doc-subtitle">Central de resolução de dúvidas frequentes e soluções rápidas para problemas recorrentes de suporte diário.</p>
+                </div>
+
+                <div class="faq-accordion">
+                    <div class="faq-item">
+                        <div class="faq-trigger">
+                            <span>O pedido de um cliente no WhatsApp não apareceu na Fila de Produção (KDS). O que houve?</span>
+                            <i class="fa-solid fa-chevron-down"></i>
                         </div>
-                        <div class="faq-item">
-                            <div class="faq-question">Como alterar preços de produtos de forma rápida? <i class="fas fa-chevron-down"></i></div>
-                            <div class="faq-answer">Acesse Gestão de Produtos, clique no ícone de lápis do item desejado, altere o campo "Preço de Venda" e clique em Salvar. A alteração é replicada em todos os menus ativos instantaneamente.</div>
-                        </div>
-                        <div class="faq-item">
-                            <div class="faq-question">Como posso cancelar um pedido já enviado para a produção? <i class="fas fa-chevron-down"></i></div>
-                            <div class="faq-answer">Acesse a Fila de Produção ou a comanda da Mesa, clique nos três pontos de opções do pedido e selecione "Estornar/Cancelar Item". O sistema solicitará uma justificativa padrão para auditoria interna de perdas.</div>
-                        </div>
-                        <div class="faq-item">
-                            <div class="faq-question">Como cadastrar uma nova bebida em lata no sistema? <i class="fas fa-chevron-down"></i></div>
-                            <div class="faq-answer">Vá em Gestão de Produtos > Adicionar Novo. Insira o nome (Ex: Coca-Cola Lata 350ml), selecione a categoria "Bebidas", marque a visibilidade nos canais desejados (WhatsApp, Salão, Balcão) e ative o controle de estoque por unidade.</div>
-                        </div>
-                        <div class="faq-item">
-                            <div class="faq-question">Como funciona a Feijoada de sábado no fluxo dinâmico? <i class="fas fa-chevron-down"></i></div>
-                            <div class="faq-answer">No Cadastro Mestre, você deixa os itens da Feijoada vinculados à categoria especial "Sábado". Ao abrir a operação nas primeiras horas de sábado, acione essa categoria como ativa no painel do Cardápio do Dia para liberá-la no WhatsApp de forma programada.</div>
-                        </div>
-                        <div class="faq-item">
-                            <div class="faq-question">Como configurar e calibrar as respostas automáticas do Bot de IA? <i class="fas fa-chevron-down"></i></div>
-                            <div class="faq-answer">Em Configurações > Automação WhatsApp, você consegue editar os textos de saudação, mensagens de agradecimento e tempos máximos de espera antes do bot assumir transições automáticas.</div>
-                        </div>
-                        <div class="faq-item">
-                            <div class="faq-question">Como dividir uma mesa entre 3 clientes de forma justa? <i class="fas fa-chevron-down"></i></div>
-                            <div class="faq-answer">No Mapa de Mesas, selecione a comanda ativa da mesa. Clique em "Dividir Conta". Você pode optar por dividir o valor total igualmente pelo número de pessoas ou selecionar individualmente os pratos e bebidas consumidos por cada cliente para emissão de subcontas isoladas.</div>
+                        <div class="faq-content">
+                            Isso ocorre se o fluxo conversacional não tiver sido concluído integralmente pelo cliente no bot ou se a transação do Pix Copia e Cola estiver aguardando confirmação da instituição bancária (conciliação pendente). Verifique em "Pedidos Pendentes" se há transações em aguardo.
                         </div>
                     </div>
-                </section>
 
-                <!-- HISTÓRICO DE ATUALIZAÇÕES -->
-                <section id="historico-atualizacoes" class="doc-section">
-                    <h2>📝 Histórico de Atualizações do Sistema</h2>
-                    <p>Acompanhe a evolução técnica contínua e as melhorias implantadas no ecossistema Konekta.</p>
-                    
-                    <div class="timeline">
-                        <div class="timeline-item">
-                            <div class="timeline-version">v1.2.0 <span class="timeline-date">20/06/2026</span></div>
-                            <p><strong>Novidades:</strong> Lançamento do módulo integrado de controle de faturamento de <em>Proteína por Peso</em> diretamente acoplado à interface Mobile do Garçom.</p>
-                            <p><strong>Melhorias:</strong> Otimização na velocidade de processamento do Pix Copia e Cola no Bot do WhatsApp (tempo de resposta reduzido para menos de 1 segundo).</p>
+                    <div class="faq-item">
+                        <div class="faq-trigger">
+                            <span>Como posso alterar rapidamente os preços de venda sem quebrar o robô?</span>
+                            <i class="fa-solid fa-chevron-down"></i>
                         </div>
-                        <div class="timeline-item">
-                            <div class="timeline-version">v1.1.0 <span class="timeline-date">15/04/2026</span></div>
-                            <p><strong>Novidades:</strong> Implementação do sistema de fechamento de caixa cego e módulo completo de gestão de contas de Mensalistas (Crediário).</p>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-version">v1.0.0 <span class="timeline-date">10/01/2026</span></div>
-                            <p><strong>Lançamento Oficial:</strong> Estruturação base do Konekta ERP contendo controle de mesas, módulo KDS de cozinha, faturamento balcão e automação conversacional de Delivery via WhatsApp.</p>
+                        <div class="faq-content">
+                            Acesse <strong>Gestão de Produtos</strong>, localize o item desejado, clique em editar, atualize o valor do campo "Preço de Venda" e salve. Graças aos WebSockets, o valor é alterado instantaneamente no robô e nos terminais de comandas de salão sem precisar reiniciar nenhum serviço de bot.js.
                         </div>
                     </div>
-                </section>
 
-            </div>
+                    <div class="faq-item">
+                        <div class="faq-trigger">
+                            <span>Como funciona o fluxo de Feijoada Completa de Sábado no Konekta?</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-content">
+                            O item Feijoada e seus adicionais pesados pertencem à categoria estrutural "Sábado". Nas primeiras horas de sábado, o operador acessa o Cardápio do Dia e ativa a exibição de Sábado, o que libera o fluxo com perguntas específicas de guarnição de feijoada no WhatsApp de maneira totalmente automatizada.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-trigger">
+                            <span>Como cancelar ou estornar itens lançados incorretamente em uma mesa?</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-content">
+                            No painel Mapa das Mesas, abra a mesa ocupada, clique no ícone de lixeira/opções do produto específico e clique em "Cancelar Item". O sistema exigirá que o operador selecione o motivo do cancelamento para gerar relatórios de desperdício na auditoria.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-trigger">
+                            <span>O robô do WhatsApp parou de responder os clientes de repente. O que fazer?</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-content">
+                            Verifique no painel Administrativo se o robô do WhatsApp está conectado ("QR Code Ativo"). Caso o smartphone associado fique sem conexão de dados de internet ou perca carga da bateria, o serviço em bot.js não consegue trafegar dados. Reinicie a conexão em Configurações caso necessário.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-trigger">
+                            <span>Como configurar o módulo de Crediário de uma empresa conveniada com 10 funcionários?</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-content">
+                            Cadastre a Empresa como cliente principal do Crediário com um limite financeiro robusto (ex: R$ 3.000,00). Em seguida, associe cada funcionário como dependente sob o mesmo cadastro no banco para que o consumo seja unificado na fatura mensal da empresa conveniada.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PAGE: HISTORICO -->
+            <section class="doc-page" id="page-historico">
+                <div class="doc-header">
+                    <h1 class="doc-title">📝 Histórico de Versões & Novidades</h1>
+                    <p class="doc-subtitle">Acompanhe as melhorias constantes e atualizações de engenharia implantadas no Konekta ERP.</p>
+                </div>
+
+                <div class="changelog">
+                    <div class="changelog-item">
+                        <div class="changelog-marker"></div>
+                        <div class="changelog-header">
+                            <span class="changelog-version">Konekta ERP v1.0.0</span>
+                            <span class="changelog-date">29/06/2026</span>
+                        </div>
+                        <div class="changelog-body">
+                            <p><span class="changelog-tag feat">Lançamento Oficial</span> Primeira versão estável homologada e testada em produção para estabelecimentos comerciais.</p>
+                            <p><strong>Novidades da Versão:</strong></p>
+                            <ul>
+                                <li>Integração total do fluxo de pedidos via Bot WhatsApp com regras de montagem dinâmica de marmitas em bot.js.</li>
+                                <li>Mapeamento dinâmico de layout físico de mesas em Mapa das Mesas com divisão parcial de conta por itens consumidos.</li>
+                                <li>Módulo de Fila de Produção (KDS) com aviso sonoro nativo por campainha e tags de tempo limite de preparo de urgência.</li>
+                                <li>Cálculo e pesagem de Proteínas por Peso e Refeições Self-Service acopladas diretamente no ponto de venda (PDV).</li>
+                                <li>Configuração modular de canais de visibilidade individualizados (WhatsApp, Salão, Balcão, Estoque) na edição de mercadorias.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
         </main>
     </div>
 
-    <!-- VOLTAR AO TOPO -->
-    <button id="back-to-top" title="Voltar ao Topo"><i class="fas fa-arrow-up"></i></button>
+    <!-- BACK TO TOP -->
+    <button class="back-to-top" id="back-to-top" aria-label="Voltar ao Topo">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
 
-    <!-- FOOTER -->
-    <footer class="main-footer">
-        <div>&copy; 2026 Konekta IA - Sistema de Gestão Inteligente para Restaurantes. Todos os direitos reservados.</div>
-        <div style="margin-top: 5px; color: var(--text-muted); font-size: 0.85rem;">
-            Konekta ERP v1.0.0 &bull; Última atualização da documentação: 29/06/2026
+    <!-- SYSTEM FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">Konekta ERP Documentation Hub</div>
+            <div class="footer-meta">
+                <span><i class="fa-solid fa-code"></i> Versão do Konekta: 1.0.0</span>
+                <span><i class="fa-solid fa-calendar-days"></i> Última atualização: 29/06/2026</span>
+                <span><i class="fa-solid fa-circle-check"></i> Produzido Oficialmente por Konekta IA</span>
+            </div>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- INTERACTIVE SCRIPTS -->
+    <script>
+        // PAGE NAVIGATION LOGIC (SPA)
+        const breadcrumbCurrent = document.getElementById('breadcrumb-current');
+        const sidebarNavItems = document.querySelectorAll('.nav-item');
+        const docPages = document.querySelectorAll('.doc-page');
+        const sidebar = document.getElementById('sidebar');
+
+        function switchPage(pageId) {
+            // Remove active status from all pages
+            docPages.forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Activate chosen page
+            const targetPage = document.getElementById(`page-${pageId}`);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+
+            // Update sidebar selection
+            sidebarNavItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-page') === pageId) {
+                    item.classList.add('active');
+                    // Change breadcrumb text
+                    breadcrumbCurrent.textContent = item.textContent.trim();
+                }
+            });
+
+            // Scroll directly to top of container smoothly
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+
+            // Close sidebar automatically on mobile
+            if (window.innerWidth <= 768) {
+                sidebar.classList.remove('open');
+            }
+        }
+
+        // ACCORDION (FAQ) HANDLER
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const trigger = item.querySelector('.faq-trigger');
+            trigger.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                // Close other accordions
+                faqItems.forEach(otherItem => {
+                    otherItem.classList.remove('active');
+                });
+
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // FUZZY REAL-TIME SEARCH MECHANISM (DOC EXAMINER)
+        const searchInput = document.getElementById('doc-search');
+        const searchCounter = document.getElementById('search-counter');
+        const docContainer = document.querySelector('.content-container');
+
+        // Store original page content structures for safety cleanups
+        const pageOriginals = {};
+        docPages.forEach(page => {
+            pageOriginals[page.id] = page.innerHTML;
+        });
+
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.toLowerCase().trim();
+            
+            if (query === '') {
+                searchCounter.textContent = 'Ctrl K';
+                // Restore original HTML configurations to erase markup tags
+                docPages.forEach(page => {
+                    page.innerHTML = pageOriginals[page.id];
+                });
+                
+                // Keep accordion triggers functional after restoration
+                reinitializeFaqListeners();
+
+                // Re-establish active page based on current menu choice
+                const currentActiveItem = document.querySelector('.nav-item.active');
+                if (currentActiveItem) {
+                    switchPage(currentActiveItem.getAttribute('data-page'));
+                }
+                return;
+            }
+
+            let foundCount = 0;
+
+            docPages.forEach(page => {
+                // Restore original pristine markup first
+                page.innerHTML = pageOriginals[page.id];
+
+                const pageText = page.textContent.toLowerCase();
+                
+                if (pageText.includes(query)) {
+                    // Activate searching nodes visual
+                    page.classList.add('active');
+                    foundCount++;
+
+                    // Sophisticated text highlighter without affecting native tag properties
+                    highlightTextContent(page, query);
+                } else {
+                    page.classList.remove('active');
+                }
+            });
+
+            // Re-apply accordions after html replacement
+            reinitializeFaqListeners();
+
+            searchCounter.textContent = `${foundCount} Encontrados`;
+        });
+
+        function highlightTextContent(node, query) {
+            if (node.nodeType === Node.TEXT_NODE) {
+                const text = node.nodeValue;
+                const lowerText = text.toLowerCase();
+                const index = lowerText.indexOf(query);
+
+                if (index !== -1) {
+                    const span = document.createElement('span');
+                    const before = text.substring(0, index);
+                    const match = text.substring(index, index + query.length);
+                    const after = text.substring(index + query.length);
+
+                    span.innerHTML = `${escapeHTML(before)}<mark>${escapeHTML(match)}</mark>${escapeHTML(after)}`;
+                    node.parentNode.replaceChild(span, node);
+                }
+            } else if (node.nodeType === Node.ELEMENT_NODE && node.nodeName !== 'MARK' && node.nodeName !== 'SCRIPT' && node.nodeName !== 'STYLE') {
+                for (let i = node.childNodes.length - 1; i >= 0; i--) {
+                    highlightTextContent(node.childNodes[i], query);
+                }
+            }
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+        function reinitializeFaqListeners() {
+            const currentFaqItems = document.querySelectorAll('.faq-item');
+            currentFaqItems.forEach(item => {
+                const trigger = item.querySelector('.faq-trigger');
+                trigger.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    currentFaqItems.forEach(o => o.classList.remove('active'));
+                    if (!isActive) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+        }
+
+        // HAMBURGER TOGGLE (MOBILE INTERACTIVE SIDEBAR)
+        const hamburgerBtn = document.getElementById('hamburger-menu');
+        hamburgerBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            sidebar.classList.toggle('open');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768 && sidebar.classList.contains('open') && !sidebar.contains(e.target) && e.target !== hamburgerBtn) {
+                sidebar.classList.remove('open');
+            }
+        });
+
+        // BACK TO TOP BEHAVIOR CONTROL
+        const backToTopBtn = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // HOTKEY BINDING (CTRL + K FOR RAPID SEARCH FOCUS)
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                searchInput.focus();
+            }
+        });
+    </script>
 </body>
 </html>
