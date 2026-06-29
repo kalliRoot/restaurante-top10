@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 Central de Ajuda Konekta | Documentação Oficial</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts & Lucide Icons via FontAwesome para consistência visual -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- TOP BAR -->
+    <header class="top-bar">
+        <div class="header-left">
+            <button id="toggle-sidebar" class="btn-icon" aria-label="Menu"><i class="fas fa-bars"></i></button>
+            <div class="logo">
+                <span class="logo-bold">Konekta</span><span class="logo-light">IA</span>
+                <span class="badge-version">v1.0.0</span>
+            </div>
+        </div>
+        
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="search-input" placeholder="Buscar por módulos, funções, dúvidas...">
+            <div id="search-results-count" class="search-count-badge"></div>
+        </div>
+
+        <div class="header-right">
+            <button id="theme-toggle" class="btn-icon" title="Alternar Tema"><i class="fas fa-moon"></i></button>
+            <button class="btn-home" onclick="navigateTo('inicio')"><i class="fas fa-home"></i> Início</button>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- SIDEBAR NAVIGATION -->
+        <aside class="sidebar" id="sidebar">
+            <nav class="nav-menu">
+                <a href="#inicio" class="nav-item active" onclick="navigateTo('inicio')"><i class="fas fa-home"></i> Início</a>
+                <a href="#primeiros-passos" class="nav-item" onclick="navigateTo('primeiros-passos')"><i class="fas fa-rocket"></i> Primeiros Passos</a>
+                
+                <div class="nav-heading">Módulos Operacionais</div>
+                <a href="#whatsapp" class="nav-item" onclick="navigateTo('whatsapp')"><i class="fab fa-whatsapp"></i> WhatsApp Bot</a>
+                <a href="#cardapio-dia" class="nav-item" onclick="navigateTo('cardapio-dia')"><i class="fas fa-utensils"></i> Cardápio do Dia</a>
+                <a href="#mapa-mesas" class="nav-item" onclick="navigateTo('mapa-mesas')"><i class="fas fa-th"></i> Mapa das Mesas</a>
+                <a href="#fila-producao" class="nav-item" onclick="navigateTo('fila-producao')"><i class="fas fa-cheese"></i> Fila de Produção</a>
+                <a href="#balcao" class="nav-item" onclick="navigateTo('balcao')"><i class="fas fa-shopping-basket"></i> Balcão</a>
+                <a href="#salao" class="nav-item" onclick="navigateTo('salao')"><i class="fas fa-chair"></i> Salão</a>
+                
+                <div class="nav-heading">Pesagem & Retaguarda</div>
+                <a href="#proteina-peso" class="nav-item" onclick="navigateTo('proteina-peso')"><i class="fas fa-drumstick-bite"></i> Proteína por Peso</a>
+                <a href="#refeicao-peso" class="nav-item" onclick="navigateTo('refeicao-peso')"><i class="fas fa-balance-scale"></i> Refeição por Peso</a>
+                <a href="#caixa" class="nav-item" onclick="navigateTo('caixa')"><i class="fas fa-cash-register"></i> Caixa</a>
+                <a href="#crediario" class="nav-item" onclick="navigateTo('crediario')"><i class="fas fa-book"></i> Crediário</a>
+                <a href="#estoque" class="nav-item" onclick="navigateTo('estoque')"><i class="fas fa-boxes"></i> Estoque</a>
+                <a href="#gestao-produtos" class="nav-item" onclick="navigateTo('gestao-produtos')"><i class="fas fa-apple-alt"></i> Gestão de Produtos</a>
+                
+                <div class="nav-heading">Suporte & Dados</div>
+                <a href="#relatorios" class="nav-item" onclick="navigateTo('relatorios')"><i class="fas fa-chart-pie"></i> Relatórios</a>
+                <a href="#configuracoes" class="nav-item" onclick="navigateTo('configuracoes')"><i class="fas fa-sliders-h"></i> Configurações</a>
+                <a href="#faq" class="nav-item" onclick="navigateTo('faq')"><i class="fas fa-question-circle"></i> Perguntas Frequentes</a>
+                <a href="#historico-atualizacoes" class="nav-item" onclick="navigateTo('historico-atualizacoes')"><i class="fas fa-history"></i> Histórico</a>
+            </nav>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="content-area">
+            <!-- BREADCRUMBS -->
+            <div class="breadcrumbs" id="breadcrumbs">
+                <span onclick="navigateTo('inicio')">Konekta</span> <i class="fas fa-chevron-right"></i> <span id="current-crumb">Início</span>
+            </div>
+
+            <!-- SECTIONS CONTAINER -->
+            <div id="doc-content">
+
+                <!-- INÍCIO -->
+                <section id="inicio" class="doc-section active">
+                    <div class="hero">
+                        <h1>Gestão Inteligente para Restaurantes</h1>
+                        <p>Seja bem-vindo à Central de Ajuda Oficial do Konekta. Aqui você encontra guias práticos, documentações modulares e respostas rápidas para otimizar a operação do seu estabelecimento de ponta a ponta.</p>
+                    </div>
+
+                    <div class="grid-cards">
+                        <div class="card" onclick="navigateTo('whatsapp')">
+                            <i class="fab fa-whatsapp card-icon text-whatsapp"></i>
+                            <h3>WhatsApp Automation</h3>
+                            <p>Entenda o fluxo inteligente de atendimento e pedidos automatizados via bot.</p>
+                        </div>
+                        <div class="card" onclick="navigateTo('mapa-mesas')">
+                            <i class="fas fa-th card-icon text-mesas"></i>
+                            <h3>Mapa das Mesas</h3>
+                            <p>Gerencie comandos, divisão de contas, consumos por peso e encerramentos rápidos.</p>
+                        </div>
+                        <div class="card" onclick="navigateTo('fila-producao')">
+                            <i class="fas fa-cheese card-icon text-producao"></i>
+                            <h3>Fila de Produção</h3>
+                            <p>Monitore KDS, tempos de preparo, alertas sonoros e entregas sincronizadas.</p>
+                        </div>
+                        <div class="card" onclick="navigateTo('caixa')">
+                            <i class="fas fa-cash-register card-icon text-caixa"></i>
+                            <h3>Fluxo de Caixa</h3>
+                            <p>Abertura, sangrias, conciliação de métodos de pagamento (Pix, Cartão, Dinheiro) e fechamento.</p>
+                        </div>
+                        <div class="card" onclick="navigateTo('gestao-produtos')">
+                            <i class="fas fa-apple-alt card-icon text-produtos"></i>
+                            <h3>Cardápio & Produtos</h3>
+                            <p>Diferenciação entre Cadastro Mestre e Cardápio Dinâmico Diário.</p>
+                        </div>
+                        <div class="card" onclick="navigateTo('crediario')">
+                            <i class="fas fa-book card-icon text-crediario"></i>
+                            <h3>Crediário (Pendura)</h3>
+                            <p>Controle de contas correntes de clientes correntistas, limites de crédito e notificações.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PRIMEIROS PASSOS -->
+                <section id="primeiros-passos" class="doc-section">
+                    <h2>🚀 Primeiros Passos</h2>
+                    <p>Configure seu ambiente operacional Konekta em poucos minutos seguindo a trilha inicial de implantação.</p>
+                    <div class="step-list">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-text"><strong>Configuração de Perfil:</strong> Insira os dados cadastrais da empresa, CNPJ, horários de funcionamento e regras de entrega em Configurações.</div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-text"><strong>Cadastro Mestre de Produtos:</strong> Alimente seu inventário com insumos, bebidas e pratos base estruturados por categorias nativas.</div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-text"><strong>Vinculação do WhatsApp:</strong> Realize a leitura do QR Code do seu dispositivo para ativar a Inteligência Artificial de atendimento automático.</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- WHATSAPP -->
+                <section id="whatsapp" class="doc-section">
+                    <h2>💬 Automação do WhatsApp</h2>
+                    <p>O Konekta possui um ecossistema de processamento de linguagem natural focado em converter mensagens casuais em pedidos estruturados no seu painel principal.</p>
+                    
+                    <h3>Fluxo Completo da Jornada do Cliente</h3>
+                    <div class="flowchart">
+                        <div class="flow-step"><strong>1. Entrada:</strong> Cliente envia "Oi" ou qualquer saudação.</div>
+                        <div class="flow-step"><strong>2. Direcionamento:</strong> Bot questiona: Delivery ou Retirada Balcão.</div>
+                        <div class="flow-step"><strong>3. Volume:</strong> Usuário seleciona a Quantidade de Marmitas/Pratos.</div>
+                        <div class="flow-step"><strong>4. Dimensionamento:</strong> Escolha do tamanho (M, G, Torre).</div>
+                        <div class="flow-step"><strong>5. Base:</strong> Seleção do tipo de Feijão (Carioca, Preto, Sem Feijão).</div>
+                        <div class="flow-step"><strong>6. Proteínas:</strong> Definição das opções de carnes e substitutos dispostos no dia.</div>
+                        <div class="flow-step"><strong>7. Acompanhamentos:</strong> Escolha de guarnições (Arroz, Farofa, Saladas, Massas).</div>
+                        <div class="flow-step"><strong>8. Upsell:</strong> Oferta inteligente de Bebidas e Sobremesas.</div>
+                        <div class="flow-step"><strong>9. Observações:</strong> Campo livre para restrições ou notas adicionais.</div>
+                        <div class="flow-step"><strong>10. Logística:</strong> Coleta/Confirmação de Endereço via CEP ou Geolocalização.</div>
+                        <div class="flow-step"><strong>11. Finanças:</strong> Escolha da Forma de Pagamento (Pix com Copia e Cola automático, Cartão na entrega).</div>
+                        <div class="flow-step"><strong>12. Despacho:</strong> Pedido transmitido instantaneamente para a Fila de Produção da cozinha.</div>
+                        <div class="flow-step"><strong>13. Status:</strong> Notificação automática de atualização ("Em preparo", "Saiu para entrega").</div>
+                    </div>
+                </section>
+
+                <!-- CARDÁPIO DO DIA -->
+                <section id="cardapio-dia" class="doc-section">
+                    <h2>🍽 Cardápio do Dia vs Cadastro Mestre</h2>
+                    <p>Para evitar retrabalhos diários, o Konekta divide a arquitetura de produtos em duas esferas lógicas:</p>
+                    
+                    <blockquote>
+                        <strong>Conceito Chave:</strong> O <em>Cadastro Mestre</em> armazena absolutamente tudo o que sua cozinha é capaz de produzir. O <em>Cardápio do Dia</em> é um espelho ativo contendo apenas o que está disponível para venda nas próximas horas.
+                    </blockquote>
+
+                    <h3>Configuração Rápida do Cardápio do Dia</h3>
+                    <p>Acesse o painel do Cardápio Diário e simplesmente marque os seletores ativos. Isso muda em tempo real a visibilidade no robô do WhatsApp, nos tablets do Salão e na interface do Balcão.</p>
+                    
+                    <h3>Estrutura das Categorias Padrão (Sidebar do Cardápio)</h3>
+                    <ul>
+                        <li><strong>Bovino:</strong> Cortes como Cupim, Alcatra, Carne de Panela.</li>
+                        <li><strong>Suíno:</strong> Bisteca, Lombo Assado, Costelinha.</li>
+                        <li><strong>Frango:</strong> Filé de Frango Grelhado, Frango Assado, Fricassê.</li>
+                        <li><strong>Peixes:</strong> Filé de Tilápia, Bacalhoada (Sextas-feiras).</li>
+                        <li><strong>Acompanhamentos:</strong> Purê de Batata, Batata Frita, Mandioca Frita.</li>
+                        <li><strong>Sábado (Especialidade):</strong> Feijoada Completa e Guarnições Dedicadas.</li>
+                        <li><strong>Adicionais:</strong> Ovo Frito Extra, Queijo Ralado, Molhos Especiais.</li>
+                    </ul>
+                </section>
+
+                <!-- MAPA DAS MESAS -->
+                <section id="mapa-mesas" class="doc-section">
+                    <h2>🗺 Mapa das Mesas</h2>
+                    <p>Interface gráfica em grid que representa o layout físico do salão do restaurante.</p>
+                    <h3>Rotinas Operacionais Padronizadas:</h3>
+                    <ul>
+                        <li><strong>Abrir Mesa:</strong> Clique em uma mesa cinza (Livre), digite o número e clique em Inicializar.</li>
+                        <li><strong>Adicionar Cliente:</strong> Vincule o nome do cliente ou o número da comanda para controle individualizado dentro da mesma mesa.</li>
+                        <li><strong>Lançar Pedidos:</strong> Selecione os itens do menu. Ao confirmar, impressoras térmicas específicas da cozinha ou telas KDS recebem as comandas automaticamente.</li>
+                        <li><strong>Lançamento de Itens por Peso:</strong> Integre balanças homologadas ou insira manualmente as gramaturas de <em>Proteína por Peso</em> ou <em>Refeição por Peso</em> diretamente no fluxo da mesa.</li>
+                        <li><strong>Dividir Mesa / Fechamento Parcial:</strong> Selecione os itens consumidos por uma pessoa específica da mesa. O sistema isola o subtotal, gera o QR Code Pix ou processa o cartão, dando baixa automática apenas nos itens pagos e mantendo a mesa aberta para o restante do grupo.</li>
+                        <li><strong>Fechamento e Encerramento Total:</strong> Clique em "Fechar Mesa". O sistema emite a pré-conta, bloqueia novos lançamentos e aguarda a confirmação de recebimento no Caixa para liberar o status da mesa para "Livre".</li>
+                    </ul>
+                </section>
+
+                <!-- FILA DE PRODUÇÃO -->
+                <section id="fila-producao" class="doc-section">
+                    <h2>🍱 Fila de Produção (KDS)</h2>
+                    <p>Substitua os papéis por telas de alta performance na sua cozinha para acelerar os preparos.</p>
+                    <ul>
+                        <li><strong>Fila e Prioridade:</strong> Pedidos entram cronologicamente. Pedidos de Delivery urgentes recebem tags visuais piscantes laranja.</li>
+                        <li><strong>Pedidos Agendados:</strong> Itens programados para entrega tardia ficam ocultos e entram na linha ativa automaticamente 30 minutos antes do horário de entrega.</li>
+                        <li><strong>Alertas de Campainha:</strong> Sinalização sonora configurável a cada novo pedido recebido ou quando um prato atinge o tempo limite de espera.</li>
+                        <li><strong>Ciclo de Status do Item:</strong>
+                            <br><span class="badge">Pendente</span> → <span class="badge" style="background:#3b82f6;">Iniciar Preparo</span> → <span class="badge" style="background:#10b981;">Finalizar Preparo</span> → <span class="badge" style="background:#6b7280;">Entregue / Despachado</span>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- BALCÃO -->
+                <section id="balcao" class="doc-section">
+                    <h2>🛒 Operação de Balcão (Takeaway)</h2>
+                    <p>Módulo de venda rápida focado no fluxo de clientes que compram diretamente no balcão para consumir em outro local.</p>
+                    <p>Abertura de venda direta sem necessidade de alocação de mesa. O fluxo exige apenas a seleção dos produtos, preenchimento opcional do nome do cliente para chamada no painel, e liquidação financeira imediata.</p>
+                </section>
+
+                <!-- SALÃO -->
+                <section id="salao" class="doc-section">
+                    <h2>🍴 Atendimento de Salão</h2>
+                    <p>Interface responsiva otimizada para smartphones e tablets utilizados pelos garçons.</p>
+                    <p>Permite mobilidade total: o garçom faz o pedido ao lado do cliente e os dados são disparados em tempo real para o bar e para a cozinha, reduzindo o tempo de atendimento em até 40%.</p>
+                </section>
+
+                <!-- PROTEÍNA POR PESO -->
+                <section id="proteina-peso" class="doc-section">
+                    <h2>🥩 Proteína por Peso</h2>
+                    <p>Módulo dedicado a restaurantes que trabalham com preço fixo para o buffet livre, porém realizam cobrança pesada e fracionada para carnes nobres ou churrasco.</p>
+                    <p>No momento de lançar o item na comanda, a tela solicitará a pesagem exata em gramas. O cálculo é feito multiplicando o peso líquido pelo valor cadastrado no Cadastro Mestre por Quilo.</p>
+                </section>
+
+                <!-- REFEIÇÃO POR PESO -->
+                <section id="refeicao-peso" class="doc-section">
+                    <h2>⚖ Refeição por Peso (Self-Service)</h2>
+                    <p>Ideal para operações tradicionais de buffet self-service por quilo.</p>
+                    <p>O operador posiciona o prato na balança acoplada, o sistema desconta o valor da Tara automaticamente e computa o valor monetário real instantaneamente, imprimindo a comanda com código de barras para leitura posterior no caixa.</p>
+                </section>
+
+                <!-- CAIXA -->
+                <section id="caixa" class="doc-section">
+                    <h2>💳 Frente de Caixa (PDV)</h2>
+                    <p>O coração financeiro do seu estabelecimento. O fluxo do caixa exige conciliação rigorosa de entradas e saídas.</p>
+                    <ul>
+                        <li><strong>Abertura de Caixa:</strong> Defina o valor de fundo de reserva (troco) no início do expediente.</li>
+                        <li><strong>Formas de Pagamento Homologadas:</strong> Pix (com conciliação bancária instantânea via API), Cartões de Crédito/Débito, Dinheiro e Vales Alimentação.</li>
+                        <li><strong>Suprimentos e Sangrias:</strong> Registre entradas extras de troco (Suprimento) ou retiradas de valores altos para segurança (Sangria) detalhando o motivo.</li>
+                        <li><strong>Fechamento de Caixa:</strong> Tela de fechamento cego (onde o operador informa os valores físicos em caixa sem saber o valor do sistema). O Konekta processa a divergência e gera o relatório gerencial de quebras ou sobras.</li>
+                    </ul>
+                </section>
+
+                <!-- CREDIÁRIO -->
+                <section id="crediario" class="doc-section">
+                    <h2>📒 Crediário (Controle de Mensalistas / Pendura)</h2>
+                    <p>Gerencie clientes confiáveis, empresas parceiras ou funcionários que consomem diariamente para pagar de forma agrupada quinzenal ou mensalmente.</p>
+                    <ul>
+                        <li><strong>Cadastro e Limite:</strong> Defina um limite de crédito máximo para cada cliente correntista cadastrado.</li>
+                        <li><strong>Fluxo de Venda:</strong> No encerramento da Mesa ou Balcão, selecione a opção de pagamento "Crediário" e vincule ao cliente cadastrado.</li>
+                        <li><strong>Vencimentos e Notificações:</strong> O sistema monitora as datas de vencimento acordadas e disponibiliza uma régua de cobrança automática via WhatsApp integrada.</li>
+                        <li><strong>Recebimento de Faturas:</strong> No módulo Crediário, busque pelo cliente, selecione as contas em aberto e realize a liquidação total ou parcial direto para o Caixa ativo do dia.</li>
+                    </ul>
+                </section>
+
+                <!-- ESTOQUE -->
+                <section id="estoque" class="doc-section">
+                    <h2>📦 Estoque e Insumos</h2>
+                    <p>Controle preciso de mercadorias vendáveis e insumos de produção.</p>
+                    <ul>
+                        <li><strong>Entrada de Mercadorias:</strong> Importação automatizada via chave XML da Nota Fiscal de compra ou preenchimento manual de lotes.</li>
+                        <li><strong>Baixa Automática:</strong> Itens como refrigerantes, sucos e cervejas sofrem baixa instantânea a cada unidade vendida no PDV ou WhatsApp.</li>
+                        <li><strong>Alertas de Estoque Mínimo:</strong> Relatórios visuais dinâmicos alertando quando insumos essenciais atingem a margem crítica de segurança de reposição.</li>
+                    </ul>
+                </section>
+
+                <!-- GESTÃO DE PRODUTOS -->
+                <section id="gestao-produtos" class="doc-section">
+                    <h2>🥤 Gestão Geral de Produtos e Catálogos</h2>
+                    <p>Configuração profunda dos atributos das suas mercadorias comerciais.</p>
+                    <h3>Matriz de Visibilidade dos Canais</h3>
+                    <p>No painel de edição de qualquer produto, você pode determinar exatamente onde ele ficará visível utilizando caixas de seleção rápida:</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Canal de Venda</th>
+                                <th>Uso Prático</th>
+                                <th>Exemplo Comercial</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>WhatsApp</strong></td>
+                                <td>Visível para clientes finais que compram pelo bot de delivery.</td>
+                                <td>Marmitas, Bebidas Lata, Doces Embalados.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Balcão</strong></td>
+                                <td>Itens visíveis na tela de pedidos rápidos de retirada.</td>
+                                <td>Salgados da estufa, Café expresso.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Salão</strong></td>
+                                <td>Disponível nos tablets e smartphones dos garçons.</td>
+                                <td>Porções, Pratos Executivos, Sucos em Jarra.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Estoque</strong></td>
+                                <td>Mapeamento interno de controle de estoque de insumos não vendidos diretamente.</td>
+                                <td>Fardo de Arroz, Óleo de Soja (Quilos/Litros).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- RELATÓRIOS -->
+                <section id="relatorios" class="doc-section">
+                    <h2>📊 Relatórios Gerenciais</h2>
+                    <p>Analise a saúde financeira da sua operação através de dashboards intuitivos de Business Intelligence.</p>
+                    <ul>
+                        <li><strong>Faturamento Bruto vs Líquido:</strong> Visualização por período (Diário, Semanal, Mensal).</li>
+                        <li><strong>Curva ABC de Pratos:</strong> Saiba com exatidão quais são as proteínas e pratos mais vendidos e quais geram maior margem de lucro real.</li>
+                        <li><strong>Ticket Médio por Canal:</strong> Compare se o seu cliente consome mais valor financeiro dentro do Salão ou através do canal de Delivery do WhatsApp.</li>
+                    </ul>
+                </section>
+
+                <!-- CONFIGURAÇÕES -->
+                <section id="configuracoes" class="doc-section">
+                    <h2>⚙ Configurações Gerais do Sistema</h2>
+                    <p>Área de controle administrativo do Konekta ERP.</p>
+                    <p>Aqui você realiza o gerenciamento de permissões de usuários (Administrador, Gerente, Operador de Caixa, Garçom), cadastro de impressoras térmicas via IP ou USB, tempo de resposta padrão do robô e limites territoriais das taxas de entrega de delivery.</p>
+                </section>
+
+                <!-- FAQ -->
+                <section id="faq" class="doc-section">
+                    <h2>❓ Perguntas Frequentes (FAQ)</h2>
+                    <p>Respostas diretas para as principais dúvidas de suporte operacional diário.</p>
+                    
+                    <div class="faq-container">
+                        <div class="faq-item">
+                            <div class="faq-question">Meu pedido não apareceu na tela da cozinha, o que fazer? <i class="fas fa-chevron-down"></i></div>
+                            <div class="faq-answer">Verifique se o pedido foi devidamente finalizado no Caixa/Balcão ou se o cliente concluiu a etapa de pagamento no WhatsApp. Verifique também a conexão de internet do KDS ou impressora correspondente àquela categoria de produto.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Como alterar preços de produtos de forma rápida? <i class="fas fa-chevron-down"></i></div>
+                            <div class="faq-answer">Acesse Gestão de Produtos, clique no ícone de lápis do item desejado, altere o campo "Preço de Venda" e clique em Salvar. A alteração é replicada em todos os menus ativos instantaneamente.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Como posso cancelar um pedido já enviado para a produção? <i class="fas fa-chevron-down"></i></div>
+                            <div class="faq-answer">Acesse a Fila de Produção ou a comanda da Mesa, clique nos três pontos de opções do pedido e selecione "Estornar/Cancelar Item". O sistema solicitará uma justificativa padrão para auditoria interna de perdas.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Como cadastrar uma nova bebida em lata no sistema? <i class="fas fa-chevron-down"></i></div>
+                            <div class="faq-answer">Vá em Gestão de Produtos > Adicionar Novo. Insira o nome (Ex: Coca-Cola Lata 350ml), selecione a categoria "Bebidas", marque a visibilidade nos canais desejados (WhatsApp, Salão, Balcão) e ative o controle de estoque por unidade.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Como funciona a Feijoada de sábado no fluxo dinâmico? <i class="fas fa-chevron-down"></i></div>
+                            <div class="faq-answer">No Cadastro Mestre, você deixa os itens da Feijoada vinculados à categoria especial "Sábado". Ao abrir a operação nas primeiras horas de sábado, acione essa categoria como ativa no painel do Cardápio do Dia para liberá-la no WhatsApp de forma programada.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Como configurar e calibrar as respostas automáticas do Bot de IA? <i class="fas fa-chevron-down"></i></div>
+                            <div class="faq-answer">Em Configurações > Automação WhatsApp, você consegue editar os textos de saudação, mensagens de agradecimento e tempos máximos de espera antes do bot assumir transições automáticas.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Como dividir uma mesa entre 3 clientes de forma justa? <i class="fas fa-chevron-down"></i></div>
+                            <div class="faq-answer">No Mapa de Mesas, selecione a comanda ativa da mesa. Clique em "Dividir Conta". Você pode optar por dividir o valor total igualmente pelo número de pessoas ou selecionar individualmente os pratos e bebidas consumidos por cada cliente para emissão de subcontas isoladas.</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- HISTÓRICO DE ATUALIZAÇÕES -->
+                <section id="historico-atualizacoes" class="doc-section">
+                    <h2>📝 Histórico de Atualizações do Sistema</h2>
+                    <p>Acompanhe a evolução técnica contínua e as melhorias implantadas no ecossistema Konekta.</p>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-version">v1.2.0 <span class="timeline-date">20/06/2026</span></div>
+                            <p><strong>Novidades:</strong> Lançamento do módulo integrado de controle de faturamento de <em>Proteína por Peso</em> diretamente acoplado à interface Mobile do Garçom.</p>
+                            <p><strong>Melhorias:</strong> Otimização na velocidade de processamento do Pix Copia e Cola no Bot do WhatsApp (tempo de resposta reduzido para menos de 1 segundo).</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-version">v1.1.0 <span class="timeline-date">15/04/2026</span></div>
+                            <p><strong>Novidades:</strong> Implementação do sistema de fechamento de caixa cego e módulo completo de gestão de contas de Mensalistas (Crediário).</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-version">v1.0.0 <span class="timeline-date">10/01/2026</span></div>
+                            <p><strong>Lançamento Oficial:</strong> Estruturação base do Konekta ERP contendo controle de mesas, módulo KDS de cozinha, faturamento balcão e automação conversacional de Delivery via WhatsApp.</p>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- VOLTAR AO TOPO -->
+    <button id="back-to-top" title="Voltar ao Topo"><i class="fas fa-arrow-up"></i></button>
+
+    <!-- FOOTER -->
+    <footer class="main-footer">
+        <div>&copy; 2026 Konekta IA - Sistema de Gestão Inteligente para Restaurantes. Todos os direitos reservados.</div>
+        <div style="margin-top: 5px; color: var(--text-muted); font-size: 0.85rem;">
+            Konekta ERP v1.0.0 &bull; Última atualização da documentação: 29/06/2026
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
